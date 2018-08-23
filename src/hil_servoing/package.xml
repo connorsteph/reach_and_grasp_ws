@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>hil_servoing</name>
+  <version>0.1.0</version>
+  <description>Human in the Loop Servoing Package</description>
+  <maintainer email="cjs@ualberta.ca">cjs</maintainer>
+  <license>BSD</license>
+  <author>cjs</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>wam_control</depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>catkin_modules</depend>
+  <export>
+  </export>
+
+</package>
