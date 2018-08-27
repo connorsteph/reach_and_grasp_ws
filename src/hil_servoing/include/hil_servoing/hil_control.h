@@ -1,4 +1,4 @@
-/* 
+/*
  * lpetrich 01/07/18
  */
 
@@ -25,7 +25,21 @@
 #include "hil_servoing/EndEffectorPoints.h"
 #include "hil_servoing/hil_utilities.h"
 
-class UVSControl 
+
+// MoveIt!
+#include <moveit/robot_model_loader/robot_model_loader.h>
+#include <moveit/robot_model/robot_model.h>
+#include <moveit/robot_state/robot_state.h>
+
+
+// Robot state publishing
+#include <moveit/robot_state/conversions.h>
+#include <moveit_msgs/DisplayRobotState.h>
+
+// Kinematics
+#include <moveit_msgs/GetPositionIK.h>
+
+class UVSControl
 {
 	public:
 		ArmControl *arm;
@@ -71,11 +85,12 @@ class UVSControl
 		int move_step(bool continous_motion);
 		int teleop_move_step(bool continous_motion);
 		int teleop_grasp_step();
+		bool comput_IK(geometry_msgs::Pose p);
 		bool broyden_update(double alpha);
 		bool jacobian_estimate(double perturbation_delta);
 		bool sphere_move(const Eigen::VectorXd & control_vec);
 		void set_active_joints();
-		void loop(); 
+		void loop();
 		void initialize();
 		void teleop_grasp();
 
@@ -90,11 +105,11 @@ class UVSControl
 		Eigen::VectorXd image_eef_pos;
 		bool new_error;
 		bool new_eef;
-		
+
 		bool ready() {
-			if (get_error().size() == 0 || get_eef_position().size() == 0) { 
+			if (get_error().size() == 0 || get_eef_position().size() == 0) {
 				std::cout << "please initialize trackers" << std::endl;
-				return false; 
+				return false;
 			}
 			else { return true; }
 		}
@@ -109,13 +124,13 @@ class UVSControl
 		    double cond = (singular_values(0) / singular_values(singular_values.size()-1));
 		    log(filename, "singular values: ", singular_values, false);
 		    log(filename, "condition number: ", cond, false);
-		    if (cond > max) { 
+		    if (cond > max) {
 			    singular_values(singular_values.size()-1) = 0;
 			    double cond = (singular_values(0) / singular_values(singular_values.size()-2));
 			    std::cout << "condition number failed, setting smallest singular value to 0" << std::endl;
 			    log(filename, "new singular values: ", singular_values, false);
 			    log(filename, "new condition number: ", cond, false);
-		    } 
+		    }
 		    typename _Matrix_Type_::Scalar tolerance = epsilon * std::max(a.cols(), a.rows()) * singular_values.array().abs().maxCoeff();
 		    result = svd.matrixV() * _Matrix_Type_( (singular_values.array().abs() >
 		             tolerance).select(singular_values.array().inverse(), 0) ).asDiagonal() *
@@ -123,37 +138,37 @@ class UVSControl
 		    return true;
 		}
 
-		Eigen::VectorXd get_error() 
-		{ 
+		Eigen::VectorXd get_error()
+		{
 			while (!new_error) { continue; }
 			new_error = false;
-			return image_error_vector; 
+			return image_error_vector;
 		}
-		
-		Eigen::VectorXd get_eef_position() 
-		{ 
+
+		Eigen::VectorXd get_eef_position()
+		{
 			while (!new_eef) { continue; } // TODO fix so doesn't get stuck in iteration 6
 			new_eef = false;
-			return image_eef_pos; 
+			return image_eef_pos;
 		}
-		
+
 		void error_cb(hil_servoing::Error::ConstPtr error) {
 			hil_servoing::Error current_error = *error;
 			int sz = current_error.error.size();
 	    	Eigen::VectorXd e(sz);
-		    for(int i = 0; i < sz; ++i) { 
-		    	e[i] = current_error.error[i]; 
+		    for(int i = 0; i < sz; ++i) {
+		    	e[i] = current_error.error[i];
 		    }
 		    image_error_vector = e;
 		    new_error = true;
 		}
-		
+
 		void eef_cb(hil_servoing::EndEffectorPoints::ConstPtr eef) {
 			hil_servoing::EndEffectorPoints current_eef = *eef;
 			Eigen::VectorXd eef_pos(current_eef.points.size() * 2);
 			int j = 0;
 			for (int i = 0; i < current_eef.points.size(); ++i) {
-				eef_pos[j] = current_eef.points[i].x; 
+				eef_pos[j] = current_eef.points[i].x;
 				eef_pos[j+1] = current_eef.points[i].y;
 				j += 2;
 			}
@@ -168,7 +183,7 @@ class UVSControl
 
 		// void move_cb(std_msgs::Bool data) {
 		// 	bool b = data.data;
-		// 	if (b) { move_now = true; } 
+		// 	if (b) { move_now = true; }
 		// 	else { move_now = false; }
 		// }
 

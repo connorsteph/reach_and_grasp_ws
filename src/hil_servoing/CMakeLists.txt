@@ -10,7 +10,12 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   cmake_modules
   wam_control
+  moveit_core
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  pluginlib
 )
+
 
 find_package(Eigen REQUIRED)
 

@@ -1,10 +1,10 @@
-/* 
+/*
  * lpetrich 27/06/18
  */
 #include <fstream>
 #include "hil_servoing/hil_control.h"
 
-UVSControl::UVSControl(ros::NodeHandle nh_) 
+UVSControl::UVSControl(ros::NodeHandle nh_)
 {
 	dof = 0;
 	total_joints = 0;
@@ -17,6 +17,7 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 	prefix = "/home/froglake/vs_workspace/src/hil_servoing/log_data/";
 	filename = prefix + current_time() + ".txt";
 	arm = new ArmControl(nh_);
+
 	// Get DOF of arm
 	do {
 		ROS_INFO_STREAM("Waiting to find robot DOF");
@@ -42,7 +43,7 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 	teleop_sub = nh_.subscribe("/teleop", 1, &UVSControl::teleop_cb, this);
 }
 
-UVSControl::~UVSControl() 
+UVSControl::~UVSControl()
 { // shutdown ROS subscribers properly
 	error_sub.shutdown();
 	eef_sub.shutdown();
@@ -62,7 +63,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd & control_vec)
 	if (flip){delta[2] *= -1.0;}
 	yaw_offset += control_vec[3];
 	std::cout << "Yaw offset: " << yaw_offset << "\n";
-	if (std::abs(spherical_position[1] + control_vec[1]) > M_PI) 
+	if (std::abs(spherical_position[1] + control_vec[1]) > M_PI)
 	{
 		delta[1] += (control_vec[1] > 0.0) ? -2.0*M_PI : +2.0*M_PI;
 	}
@@ -72,7 +73,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd & control_vec)
 		delta[2] = -control_vec[2] - 2.0*spherical_position[2];
 		delta[1] += (spherical_position[1] > 0.0) ? -M_PI : M_PI;
 	}
-	spherical_position += delta; 
+	spherical_position += delta;
 	std::cout << "Spher. position: \n **************\n" << spherical_position << "\n***********" <<std::endl;
 	Eigen::Vector3d goal_cartesian = spherical_to_cartesian(spherical_position) + object_position;
 
@@ -129,7 +130,7 @@ Eigen::VectorXd UVSControl::calculate_target(const Eigen::VectorXd& current_stat
 			target_state[i] = (current_state[i] + delta[j]);
 			j++;
 		} else {
-			target_state[i] = current_state[i]; 
+			target_state[i] = current_state[i];
 		}
 
 	}
@@ -137,7 +138,7 @@ Eigen::VectorXd UVSControl::calculate_target(const Eigen::VectorXd& current_stat
 }
 
 Eigen::VectorXd UVSControl::calculate_step(const Eigen::VectorXd& current_error_value)
-{ // calculates new motion step to take with the control law: step = −λJ+e 
+{ // calculates new motion step to take with the control law: step = −λJ+e
 	// std::ofstream myfile;
 	// myfile.open("predicted_pose.txt", std::ios_base::app);
 	Eigen::VectorXd step;
@@ -177,19 +178,19 @@ bool UVSControl::convergence_check(const Eigen::VectorXd& current_error)
 		arm->call_move_cartesian(goal + object_position); //TODO: consider adding blocking to cart move
 		spherical_position << control_radius, 0.0, 0.0;
 		return true;
-	} 
+	}
 	lambda = std::max(0.1, pixel_step_size / n);
-	if ((1.0 - lambda) * n < image_tol) { 
+	if ((1.0 - lambda) * n < image_tol) {
 		lambda = 1.0 - image_tol / n;
 		std::cout << "Next move places EEF too close to target - adjusting lambda to " << lambda << std::endl;
-	} 
+	}
 	std::cout << "current error norm: " << n << std::endl;
 	std::cout << "lambda: " << lambda << std::endl;
 	return false;
 }
 
 bool UVSControl::broyden_update(double alpha)
-{ // update jacobian 
+{ // update jacobian
 	Eigen::MatrixXd update(jacobian.rows(), jacobian.cols());
 	Eigen::VectorXd current_eef_position;
 	Eigen::VectorXd dy;
@@ -403,7 +404,7 @@ void UVSControl::converge(double alpha, int max_iterations, bool continous_motio
 				if (!broyden_update(alpha)) { // condition number failed, reset to previous jacobian
 					jacobian = previous_jacobian;
 					log(filename, "resetting jacobian to: ", jacobian, false);
-				} 
+				}
 				break;
 		}
 		std::cout << "loop duration: " << ros::Time::now() - begin << "\n**************************************" << std::endl;
@@ -418,7 +419,7 @@ void UVSControl::teleop_converge(double alpha, int max_iterations, bool continou
 	std::cout << "\n**************************************" << std::endl;
 	while(true && i < max_iterations){
 		if(teleop_move)
-		{	
+		{
 			std::cout << "received teleop command" << std::endl;
 			teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
@@ -437,7 +438,7 @@ void UVSControl::teleop_converge(double alpha, int max_iterations, bool continou
 					if (!broyden_update(alpha)) { // condition number failed, reset to previous jacobian
 						jacobian = previous_jacobian;
 						log(filename, "resetting jacobian to: ", jacobian, false);
-					} 
+					}
 					break;
 			}
 			// std::cout << "loop duration: " << ros::Time::now() - begin << "\n**************************************" << std::endl;
@@ -453,7 +454,7 @@ void UVSControl::teleop_grasp()
 	std::cout << "\n**************************************" << std::endl;
 	while(true){
 		if(teleop_move)
-		{	
+		{
 			std::cout << "received teleop grasp command" << std::endl;
 			teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
@@ -477,13 +478,13 @@ void UVSControl::teleop_grasp()
 
 void UVSControl::set_active_joints()
 { // set which joints to use according to users input
-	for (int i = 0; i < dof; ++i) { 
-		active_joints[i] = 0; 
+	for (int i = 0; i < dof; ++i) {
+		active_joints[i] = 0;
 	}
 	std::string line;
 	std::cout << "Which joints would you like to use? >> ";
 	std::getline(std::cin, line);
-	std::istringstream ss(line); 
+	std::istringstream ss(line);
 	int n;
 	dof = 0;
 	while (ss >> n) {
@@ -492,7 +493,7 @@ void UVSControl::set_active_joints()
 	}
 }
 
-bool UVSControl::jacobian_estimate(double perturbation_delta) 
+bool UVSControl::jacobian_estimate(double perturbation_delta)
 { // perturb each active joint for the initial jacobian estimation
 	Eigen::VectorXd e1;
 	Eigen::VectorXd e2;
@@ -520,9 +521,9 @@ bool UVSControl::jacobian_estimate(double perturbation_delta)
 	initial_jacobian = jacobian;
 	previous_joint_positions = arm->get_positions();
 	previous_eef_position = get_eef_position();
-	if (!pseudoInverse(jacobian, jacobian_inverse)) { 
+	if (!pseudoInverse(jacobian, jacobian_inverse)) {
 		std::cout << "Initial jacobian estimate failed -- condition number too large" << std::endl;
-		return false; 
+		return false;
 	}
 	log(filename, "initial jacobian: ", initial_jacobian, false);
 	log(filename, "inverse jacobian: ", jacobian_inverse, false);
@@ -534,7 +535,7 @@ Eigen::MatrixXd UVSControl::control_plane_vectors(Eigen::VectorXd & delta_q)
 	/*
 		Returns a dof x 2 matrix, with columns that define the VS control plane.
 
-		Input: 
+		Input:
 			delta_q:  next VS step in joint manifold tangent space (dof-vector)(assumed to be a small step, for local linearity purposes)
 
 			//TODO theta: desired rotation of the plane about the delta_q vector, with respect to the vertical axis in the robot base frame.
@@ -543,13 +544,13 @@ Eigen::MatrixXd UVSControl::control_plane_vectors(Eigen::VectorXd & delta_q)
 			control_plane: a dof x 2 matrix with elements in the joint manifold tangent space. First column is "right" in plane. First is "forward" in plane.
 			The second column is the change in robot joint coordinates from the VS step. Using the tool jacobian to transform this to a direction in robot base
 			coordinates (and normalizing), this defines the cartesian 3-vector that we will define our plane around, e_2.
-			If we take the cross product of e2 with the vertical vector (0, 0, 1)^T, e1 x (0, 0, 1)^T and then rotate about e2 by an angle of (theta - pi/2), 
-			we obtain e1. 
+			If we take the cross product of e2 with the vertical vector (0, 0, 1)^T, e1 x (0, 0, 1)^T and then rotate about e2 by an angle of (theta - pi/2),
+			we obtain e1.
 
 		cstephens 23/07/2018
 	*/
 	Eigen::MatrixXd control_vectors;
-	Eigen::MatrixXd jacobian(3, total_joints); 
+	Eigen::MatrixXd jacobian(3, total_joints);
 	Eigen::MatrixXd jacobian_inv(total_joints, 3);
 	//TODO Eigen::MatrixXd rotation_mat;
 	Eigen::VectorXd d_q_1;
@@ -563,7 +564,7 @@ Eigen::MatrixXd UVSControl::control_plane_vectors(Eigen::VectorXd & delta_q)
 	pseudoInverse(jacobian, jacobian_inv);
 	delta_q *= 0.1; // set delta_q norm to be small, here 0.01
 	d_x_2 = jacobian * delta_q;
-	d_x_1 = d_x_2.cross(vertical); 
+	d_x_1 = d_x_2.cross(vertical);
 	d_x_1 *= d_x_2.norm()/d_x_1.norm();
 	pseudoInverse(jacobian, jacobian_inv);
 	d_q_1 = jacobian_inv * d_x_1;
@@ -596,18 +597,18 @@ Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd
 	     * |\
 	     * | \
 	     * |  \__ */
-	    if ( ( length < 0.5 * v_init * v_init / acc )  && v_init > 0.0 ) {	
+	    if ( ( length < 0.5 * v_init * v_init / acc )  && v_init > 0.0 ) {
 		      /* There are no up or plateau phases */
 	    	time_start_plateau = -1.0;
 	        temp_time_start_down = 0.0;
 	        temp_time_end = 2 * length / v_init;
 	        if ( temp_time_start_down > time_startdown) {
-	        	time_startdown = temp_time_start_down; 
+	        	time_startdown = temp_time_start_down;
 	        	time_start_plateau = temp_time_start_plateau;
 	        	time_end = temp_time_end;
 	     	}
 	     	continue;
-	    }    
+	    }
 		/* OK, do we not have enough space to plateau?
 		 * |
 		 * |/\
@@ -620,12 +621,12 @@ Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd
 		    temp_time_start_down = (v_top - v_init) / acc;
 		    temp_time_end = temp_time_start_down + v_top / acc;
 		    if ( temp_time_start_down > time_startdown) {
-		        time_startdown = temp_time_start_down; 
+		        time_startdown = temp_time_start_down;
 		        time_start_plateau = temp_time_start_plateau;
 		        time_end = temp_time_end;
 		    }
 		    continue;
-		} 
+		}
 	    /* OK, we're going to plateau, either up or down
 	     * | __        |\__
 	     * |/  \    or |   \
@@ -682,7 +683,7 @@ void UVSControl::loop()
 			"\n\tm: Set continuous motion (current = " << continous_motion << ")" <<
 			"\n\tj: Compute Jacobian" <<
 			"\n\tx: Compute Jacobian with chosen joints" <<
-			"\n\tv: Complete VS convergence with set max iterations" << 
+			"\n\tv: Complete VS convergence with set max iterations" <<
 			"\n\ts: Compute and move one step" <<
 			"\n\te: Teleop visual servoing using keyboard node with set max iterations" <<
 			"\n\tw: Teleop grasp mode using keyboard node" <<
@@ -705,7 +706,7 @@ void UVSControl::loop()
 		switch (line[0]) {
 		case 'm':
 			s = string_input("Would you like to set motion to continuous or non-continuous?"); // wam_control --> misc_utilities.h
-			if (s[0] == 'c' || s[0] == 'C') { continous_motion = true; } 
+			if (s[0] == 'c' || s[0] == 'C') { continous_motion = true; }
 			else { continous_motion = false; }
 			std::cout << "continuous motion set to " << BoolToString(continous_motion) << std::endl; // wam_control --> misc_utilities.h
 			break;
@@ -723,7 +724,7 @@ void UVSControl::loop()
 			}
 			break;
 		case 'x':
-			if (ready()) { 
+			if (ready()) {
 				set_active_joints();
 				jacobian_initialized = jacobian_estimate(perturbation_delta);
 			}
@@ -758,14 +759,14 @@ void UVSControl::loop()
 			} else { ROS_WARN_STREAM("Jacobian is not initialized"); }
 			break;
 		case 's':
-			if (ready() && jacobian_initialized) { 
+			if (ready() && jacobian_initialized) {
 				converge(alpha, 1, false);
 				lambda = default_lambda;
 			} else { ROS_WARN_STREAM("Jacobian is not initialized"); }
 			break;
 
 		case 'e':
-			if (ready() && jacobian_initialized) { 
+			if (ready() && jacobian_initialized) {
 				teleop_converge(alpha, max_iterations, true);
 				lambda = default_lambda;
 			} else { ROS_WARN_STREAM("Jacobian is not initialized"); }
@@ -792,7 +793,9 @@ void UVSControl::loop()
 			filename = prefix + current_time() + ".txt";
 			break;
 		case 'f':
+			std::cout << arm->get_positions() << std::endl;
 			pose = getToolPose(arm->get_positions(), total_joints);
+			std::cout << pose << std::endl;
 			true_ortn = arm->get_pose();
 			std::cout << true_ortn << std::endl;
 			ortn << pose[3], pose[4], pose[5], pose[6];
@@ -839,7 +842,7 @@ void UVSControl::initialize()
 	if (dof == 7) {
 		ROS_INFO_STREAM("Initializing, please wait...");
 		while (!arm->move_to_initial_position()) { continue; }
-		ros::Duration(5).sleep();            
+		ros::Duration(5).sleep();
 		while (!bhand->initialize()) { continue; }
 		while (!bhand->close_spread()) { continue; }
 		ros::Duration(10).sleep();
@@ -848,7 +851,7 @@ void UVSControl::initialize()
 	}
 }
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
 	ros::init(argc, argv, "UVSControl");
 	ros::NodeHandle nh_("~");
@@ -856,6 +859,94 @@ int main(int argc, char *argv[])
 	spinner.start();
 	UVSControl VS(nh_);
 	// VS.initialize();
+	robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+  robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
+  ROS_INFO("Model frame: %s", kinematic_model->getModelFrame().c_str());
+
+  // Using the :moveit_core:`RobotModel`, we can construct a
+  // :moveit_core:`RobotState` that maintains the configuration1
+  // of the robot. We will set all joints in the state to their
+  // default values. We can then get a
+  // :moveit_core:`JointModelGroup`, which represents the robot
+  // model for a particular group, e.g. the "panda_arm" of the Panda
+  // robot.
+  robot_state::RobotStatePtr kinematic_state(new robot_state::RobotState(kinematic_model));
+  kinematic_state->setToDefaultValues();
+  const robot_state::JointModelGroup* joint_model_group = kinematic_model->getJointModelGroup("arm");
+  const std::vector<std::string>& joint_names = joint_model_group->getVariableNames();
+
+  // Get Joint Values
+  // ^^^^^^^^^^^^^^^^
+  // We can retreive the current set of joint values stored in the state for the Panda arm.
+	std::cout << "Made it here" << std::endl;
+  Eigen::VectorXd joint_positions = VS.arm->get_positions();
+	std::cout << "Made it here too" << std::endl;
+	std::vector<double> joints;
+	for (int i=0; i<7; ++i)
+	{
+		joints.push_back(joint_positions[i]);
+	}
+	std::cout << joint_positions << std::endl;
+  kinematic_state->setJointGroupPositions(joint_model_group, joints);
+  for (std::size_t i = 0; i < joint_names.size(); ++i)
+  {
+    ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
+	}
+	const Eigen::Affine3d &end_effector_state2 = kinematic_state->getGlobalLinkTransform("wam/wrist_palm_stump_link");
+
+  /* Print end-effector pose. Remember that this is in the model frame */
+  ROS_INFO_STREAM("Translation: " << end_effector_state2.translation());
+  ROS_INFO_STREAM("Rotation: " << end_effector_state2.rotation());
+	// Joint Limits
+  // ^^^^^^^^^^^^
+  // setJointGroupPositions() does not enforce joint limits by itself, but a call to enforceBounds() will do it.
+  /* Set one joint in the right arm outside its joint limit */
+  // joints[0] = 5.0;
+  // kinematic_state->setJointGroupPositions(joint_model_group, joints);
+	//
+  // /* Check whether any joint is outside its joint limits */
+  // ROS_INFO_STREAM("Current state is " << (kinematic_state->satisfiesBounds() ? "valid" : "not valid"));
+	//
+  // /* Enforce the joint limits for this state and check again*/
+  // kinematic_state->enforceBounds();
+  // ROS_INFO_STREAM("Current state is " << (kinematic_state->satisfiesBounds() ? "valid" : "not valid"));
+
+  // Forward Kinematics
+  // ^^^^^^^^^^^^^^^^^^
+  // Now, we can compute forward kinematics for a set of random joint
+  // values. Note that we would like to find the pose of the
+  // "r_wrist_roll_link" which is the most distal link in the
+  // "right_arm" of the robot.
+  kinematic_state->setToRandomPositions(joint_model_group);
+  const Eigen::Affine3d &end_effector_state = kinematic_state->getGlobalLinkTransform("wam/wrist_palm_link");
+
+  /* Print end-effector pose. Remember that this is in the model frame */
+  ROS_INFO_STREAM("Translation: " << end_effector_state.translation());
+  ROS_INFO_STREAM("Rotation: " << end_effector_state.rotation());
+
+  // Inverse Kinematics
+  // ^^^^^^^^^^^^^^^^^^
+  // We can now solve inverse kinematics (IK) for the right arm of the
+  // PR2 robot. To solve IK, we will need the following:
+  // * The desired pose of the end-effector (by default, this is the last link in the "right_arm" chain): end_effector_state that we computed in the step above.
+  // * The number of attempts to be made at solving IK: 5
+  // * The timeout for each attempt: 0.1 s
+  bool found_ik = kinematic_state->setFromIK(joint_model_group, end_effector_state, 10, 0.1);
+
+  // Now, we can print out the IK solution (if found):
+  if (found_ik)
+  {
+    kinematic_state->copyJointGroupPositions(joint_model_group, joints);
+    for(std::size_t i=0; i < joint_names.size(); ++i)
+    {
+      ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
+    }
+  }
+  else
+  {
+    ROS_INFO("Did not find IK solution");
+  }
+
 	VS.loop();
 	return 0;
 }

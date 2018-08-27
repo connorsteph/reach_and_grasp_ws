@@ -1,0 +1,40 @@
+FILE(REMOVE_RECURSE
+  "CMakeFiles/wam_control_generate_messages_py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTJointVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTPose.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTCartPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTCartVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTJointPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_MatrixMN.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTOrtnPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTOrtnVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandPinchPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_ForceTorqueTool.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_Teach.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_OrtnMove.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_Link.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandGraspVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_CartPosMove.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_FollowPath.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_GetToolPose.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_Play.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_JointMove.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandSpreadPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandGraspPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandFingerPos.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_OrtnSplitMove.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_CartVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_PoseMove.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_Hold.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandSpreadVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_BHandFingerVel.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_JointMoveBlock.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/_GravityComp.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/__init__.py"
+  "/home/fuego/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/srv/__init__.py"
+)
+
+# Per-language clean rules from dependency scanning.
+FOREACH(lang)
+  INCLUDE(CMakeFiles/wam_control_generate_messages_py.dir/cmake_clean_${lang}.cmake OPTIONAL)
+ENDFOREACH(lang)

@@ -1,0 +1,21 @@
+
+(cl:in-package :asdf)
+
+(defsystem "hil_servoing-msg"
+  :depends-on (:roslisp-msg-protocol :roslisp-utils )
+  :components ((:file "_package")
+    (:file "TaskIds" :depends-on ("_package_TaskIds"))
+    (:file "_package_TaskIds" :depends-on ("_package"))
+    (:file "TrackPoint" :depends-on ("_package_TrackPoint"))
+    (:file "_package_TrackPoint" :depends-on ("_package"))
+    (:file "TrackedPoints" :depends-on ("_package_TrackedPoints"))
+    (:file "_package_TrackedPoints" :depends-on ("_package"))
+    (:file "Error" :depends-on ("_package_Error"))
+    (:file "_package_Error" :depends-on ("_package"))
+    (:file "EndEffectorPoints" :depends-on ("_package_EndEffectorPoints"))
+    (:file "_package_EndEffectorPoints" :depends-on ("_package"))
+    (:file "Teleop" :depends-on ("_package_Teleop"))
+    (:file "_package_Teleop" :depends-on ("_package"))
+    (:file "ErrorInfo" :depends-on ("_package_ErrorInfo"))
+    (:file "_package_ErrorInfo" :depends-on ("_package"))
+  ))

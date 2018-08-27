@@ -1,0 +1,13 @@
+<launch>
+  <include file="$(find barrett_wam_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <node name="hil_servoing"
+        pkg="hil_servoing"
+        type="hil_servoing"
+        respawn="false" output="screen">
+    <rosparam command="load"
+              file="$(find barrett_wam_moveit_config)/config/kinematics.yaml"/>
+  </node>
+</launch>
