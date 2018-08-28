@@ -67,3 +67,9 @@ target_link_libraries(hil_teleop
   arm_control
   bhand_control
 )
+
+add_executable(kinematics src/kinematics.cpp)
+target_link_libraries(kinematics
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+)

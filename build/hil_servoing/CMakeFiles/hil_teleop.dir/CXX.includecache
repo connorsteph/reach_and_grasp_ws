@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h
+/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h
 string
 -
 vector
@@ -22,11 +22,11 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/fuego/reach_and_grasp_ws/src/hil_servoing/src/hil_teleop.cpp
+/home/froglake/reach_and_grasp_ws/src/hil_servoing/src/hil_teleop.cpp
 ros/ros.h
 -
 hil_servoing/Teleop.h
-/home/fuego/reach_and_grasp_ws/src/hil_servoing/src/hil_servoing/Teleop.h
+/home/froglake/reach_and_grasp_ws/src/hil_servoing/src/hil_servoing/Teleop.h
 signal.h
 -
 termios.h

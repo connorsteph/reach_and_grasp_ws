@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <Eigen/Core>
 
-#define KEYCODE_R 0x43 
+#define KEYCODE_R 0x43
 #define KEYCODE_L 0x44
 #define KEYCODE_U 0x41
 #define KEYCODE_D 0x42
@@ -24,7 +24,6 @@ private:
   ros::NodeHandle nh_;
   Eigen::Vector2d direction;
   ros::Publisher dir_pub;
-  
 };
 
 VSTeleop::VSTeleop()
@@ -44,105 +43,100 @@ void quit(int sig)
   exit(0);
 }
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   ros::init(argc, argv, "VS_teleop");
   VSTeleop VS_Teleop;
-  signal(SIGINT,quit);
+  signal(SIGINT, quit);
 
   VS_Teleop.keyLoop();
-  
-  return(0);
-}
 
+  return (0);
+}
 
 void VSTeleop::keyLoop()
 {
   char c;
-  bool dirty=false;
+  bool dirty = false;
   // char * mode;
 
-  // get the console in raw mode                                                              
+  // get the console in raw mode
   tcgetattr(kfd, &cooked);
   memcpy(&raw, &cooked, sizeof(struct termios));
-  raw.c_lflag &=~ (ICANON | ECHO);
-  // Setting a new line, then end of file                         
+  raw.c_lflag &= ~(ICANON | ECHO);
+  // Setting a new line, then end of file
   raw.c_cc[VEOL] = 1;
   raw.c_cc[VEOF] = 2;
   tcsetattr(kfd, TCSANOW, &raw);
 
   puts("Reading from keyboard");
   puts("---------------------------");
-  puts("Use arrow keys to move the arm. q to quit, t to toggle modes");
+  puts("Use arrow keys to move the arm, o, s, c to open the hand, spread fingers, and  q to quit, t to toggle modes");
 
-
-  for(;;)
+  for (;;)
   {
-    // get the next event from the keyboard  
-    if(read(kfd, &c, 1) < 0)
+    // get the next event from the keyboard
+    if (read(kfd, &c, 1) < 0)
     {
       perror("read():");
       exit(-1);
     }
     // ROS_INFO("value: 0x%02X\n", c);
     // ROS_DEBUG("value: 0x%02X\n", c);
-      
-    switch(c)
+
+    switch (c)
     {
-      case KEYCODE_L:
-        ROS_DEBUG("LEFT");
-        direction[0] = -1.0;
-        dirty = true;
-        break;
-      case KEYCODE_R:
-        ROS_DEBUG("RIGHT");
-        direction[0] = 1.0;
-        dirty = true;
-        break;
-      case KEYCODE_U:
-        ROS_DEBUG("UP");
-        direction[1] = 1.0;
-        dirty = true;
-        break;
-      case KEYCODE_D:
-        ROS_DEBUG("DOWN");
-        direction[1] = -1.0;
-        dirty = true;
-        break;
-      case KEYCODE_Q:
-        ROS_DEBUG("QUIT");
-        direction[0] = -9.0;
-        dirty = true;
-        break;
-      case KEYCODE_O:
-        ROS_DEBUG("OPEN");
-        direction[0] = -5.0;
-        dirty = true;
-        break;
-      case KEYCODE_C:
-        ROS_DEBUG("CLOSE");
-        direction[0] = 5.0;
-        dirty = true;
-        break;
-      case KEYCODE_T:
-        ROS_DEBUG("TOGGLE");
-        direction[1] = -5.0;
-        dirty = true;
-        break;
-          
+    case KEYCODE_L:
+      ROS_DEBUG("LEFT");
+      direction[0] = -1.0;
+      dirty = true;
+      break;
+    case KEYCODE_R:
+      ROS_DEBUG("RIGHT");
+      direction[0] = 1.0;
+      dirty = true;
+      break;
+    case KEYCODE_U:
+      ROS_DEBUG("UP");
+      direction[1] = 1.0;
+      dirty = true;
+      break;
+    case KEYCODE_D:
+      ROS_DEBUG("DOWN");
+      direction[1] = -1.0;
+      dirty = true;
+      break;
+    case KEYCODE_Q:
+      ROS_DEBUG("QUIT");
+      direction[0] = -9.0;
+      dirty = true;
+      break;
+    case KEYCODE_O:
+      ROS_DEBUG("OPEN");
+      direction[0] = -5.0;
+      dirty = true;
+      break;
+    case KEYCODE_C:
+      ROS_DEBUG("CLOSE");
+      direction[0] = 5.0;
+      dirty = true;
+      break;
+    case KEYCODE_T:
+      ROS_DEBUG("TOGGLE");
+      direction[1] = -5.0;
+      dirty = true;
+      break;
     }
     hil_servoing::Teleop kb_direction;
     kb_direction.dir_2D.push_back(direction[0]);
     kb_direction.dir_2D.push_back(direction[1]);
-    if(dirty ==true)
+    if (dirty == true)
     {
       dir_pub.publish(kb_direction);
-      direction = {0.0, 0.0};    
-      dirty=false;
+      direction = {0.0, 0.0};
+      dirty = false;
     }
   }
-
 
   return;
 }

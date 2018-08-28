@@ -1,15 +1,15 @@
-FILE(REMOVE_RECURSE
+file(REMOVE_RECURSE
   "CMakeFiles/hil_servoing_generate_messages_cpp"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/ErrorInfo.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/TaskIds.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/TrackedPoints.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/TrackPoint.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/Error.h"
-  "/home/fuego/reach_and_grasp_ws/devel/include/hil_servoing/EndEffectorPoints.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/ErrorInfo.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/EndEffectorPoints.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/TrackedPoints.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/TrackPoint.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/Error.h"
+  "/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/TaskIds.h"
 )
 
 # Per-language clean rules from dependency scanning.
-FOREACH(lang)
-  INCLUDE(CMakeFiles/hil_servoing_generate_messages_cpp.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
+foreach(lang)
+  include(CMakeFiles/hil_servoing_generate_messages_cpp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

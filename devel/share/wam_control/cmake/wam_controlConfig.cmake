@@ -67,14 +67,14 @@ set(wam_control_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(wam_control_SOURCE_PREFIX /home/fuego/reach_and_grasp_ws/src/wam_control)
-  set(wam_control_DEVEL_PREFIX /home/fuego/reach_and_grasp_ws/devel)
+  set(wam_control_SOURCE_PREFIX /home/froglake/reach_and_grasp_ws/src/wam_control)
+  set(wam_control_DEVEL_PREFIX /home/froglake/reach_and_grasp_ws/devel)
   set(wam_control_INSTALL_PREFIX "")
   set(wam_control_PREFIX ${wam_control_DEVEL_PREFIX})
 else()
   set(wam_control_SOURCE_PREFIX "")
   set(wam_control_DEVEL_PREFIX "")
-  set(wam_control_INSTALL_PREFIX /home/fuego/reach_and_grasp_ws/install)
+  set(wam_control_INSTALL_PREFIX /home/froglake/reach_and_grasp_ws/install)
   set(wam_control_PREFIX ${wam_control_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(wam_control_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/fuego/reach_and_grasp_ws/devel/include;/home/fuego/reach_and_grasp_ws/src/wam_control/include " STREQUAL " ")
+if(NOT "/home/froglake/reach_and_grasp_ws/devel/include;/home/froglake/reach_and_grasp_ws/src/wam_control/include " STREQUAL " ")
   set(wam_control_INCLUDE_DIRS "")
-  set(_include_dirs "/home/fuego/reach_and_grasp_ws/devel/include;/home/fuego/reach_and_grasp_ws/src/wam_control/include")
+  set(_include_dirs "/home/froglake/reach_and_grasp_ws/devel/include;/home/froglake/reach_and_grasp_ws/src/wam_control/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/fuego/reach_and_grasp_ws/devel/include;/home/fuego/reach_and_grasp
         message(FATAL_ERROR "Project 'wam_control' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'cjs <cjs@ualberta.ca>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'wam_control' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/fuego/reach_and_grasp_ws/src/wam_control/${idir}'.  Ask the maintainer 'cjs <cjs@ualberta.ca>' to fix it.")
+      message(FATAL_ERROR "Project 'wam_control' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/froglake/reach_and_grasp_ws/src/wam_control/${idir}'.  Ask the maintainer 'cjs <cjs@ualberta.ca>' to fix it.")
     endif()
     _list_append_unique(wam_control_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/fuego/reach_and_grasp_ws/devel/lib;/home/fuego/reach_and_grasp_ws/devel/lib;/opt/ros/indigo/lib)
+    foreach(path /home/froglake/reach_and_grasp_ws/devel/lib;/home/froglake/irl_workspace/devel/lib;/home/froglake/vs_workspace/devel/lib;/opt/ros/indigo/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

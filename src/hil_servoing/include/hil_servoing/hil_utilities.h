@@ -46,8 +46,8 @@ Eigen::Quaterniond inwards_normal_to_quaternion(const Eigen::Vector3d& spherical
     Eigen::Vector3d rpy;
     Eigen::Vector3d u, v, x, y;
     Eigen::Matrix3d SO_3;
-    double phi = spherical_coords[1];
-    double theta = spherical_coords[2];
+    double theta = spherical_coords[1];
+    double phi = spherical_coords[2];
     double c_phi = std::cos(phi);
     double c_theta = std::cos(theta);
     double s_phi = std::sin(phi);
@@ -69,7 +69,7 @@ Eigen::Quaterniond inwards_normal_to_quaternion(const Eigen::Vector3d& spherical
         SO_3(i, 1) = v[i];
         SO_3(i, 2) = inwards_normal[i];
     }
-    quaternion = Eigen::Quaterniond(SO_3.transpose());
+    quaternion = Eigen::Quaterniond(SO_3);
     // if (inwards_normal.dot(vertical) < -0.95)
     // {
     //     quaternion.x() = 0.0;
@@ -94,8 +94,8 @@ Eigen::Vector3d spherical_to_cartesian(const Eigen::Vector3d spherical_cooords)
 {
     Eigen::Vector3d cartesian_coords;
     double r = spherical_cooords[0];
-    double phi = spherical_cooords[1];
-    double theta = spherical_cooords[2];
+    double theta = spherical_cooords[1];
+    double phi = spherical_cooords[2];
     double c_theta = std::cos(theta);
     double s_theta = std::sin(theta);
     double c_phi = std::cos(phi);
