@@ -90,6 +90,8 @@ Eigen::Quaterniond inwards_normal_to_quaternion(const Eigen::Vector3d& spherical
     return quaternion;
 }
 
+
+
 Eigen::Vector3d spherical_to_cartesian(const Eigen::Vector3d spherical_cooords)
 {
     Eigen::Vector3d cartesian_coords;
@@ -113,8 +115,8 @@ Eigen::Vector3d cartesian_to_spherical(const Eigen::Vector3d cartesian_coords)
     double y = cartesian_coords[1];
     double z = cartesian_coords[2];
     spherical_coords[0] = std::sqrt(x*x + y*y + z*z);
-    spherical_coords[1] = std::atan2(y, x);
-    spherical_coords[2] = std::atan2(std::sqrt(x*x + y*y), z);
+    spherical_coords[1] = std::atan2(std::sqrt(x*x + y*y), z);
+    spherical_coords[2] = std::atan2(y, x);
     return spherical_coords;
 }
 

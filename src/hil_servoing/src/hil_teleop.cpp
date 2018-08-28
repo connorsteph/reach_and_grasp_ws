@@ -13,6 +13,7 @@
 #define KEYCODE_T 0x74
 #define KEYCODE_O 0x6F
 #define KEYCODE_C 0x63
+#define KEYCODE_S 0x73
 
 class VSTeleop
 {
@@ -71,7 +72,7 @@ void VSTeleop::keyLoop()
 
   puts("Reading from keyboard");
   puts("---------------------------");
-  puts("Use arrow keys to move the arm, o, s, c to open the hand, spread fingers, and  q to quit, t to toggle modes");
+  puts("Use arrow keys to move the arm, o, s, c to open the hand, toggle finger spread,\n  q to quit, and t to toggle modes.");
 
   for (;;)
   {
@@ -119,6 +120,11 @@ void VSTeleop::keyLoop()
     case KEYCODE_C:
       ROS_DEBUG("CLOSE");
       direction[0] = 5.0;
+      dirty = true;
+      break;
+    case KEYCODE_S:
+      ROS_DEBUG("SPREAD");
+      direction[1] = 5.0;
       dirty = true;
       break;
     case KEYCODE_T:

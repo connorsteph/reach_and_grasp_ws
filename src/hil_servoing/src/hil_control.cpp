@@ -62,39 +62,37 @@ UVSControl::~UVSControl()
 }
 
 bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
-{	
+{
 	const robot_state::JointModelGroup *joint_model_group = kinematic_model->getJointModelGroup("arm");
 	const std::vector<std::string> &joint_names = joint_model_group->getVariableNames();
 	Eigen::Quaterniond quaternion;
 	Eigen::VectorXd ortn(4);
 	Eigen::Vector3d rpy;
 	Eigen::VectorXd full_pose(7);
+	double delta_radians = 0.0872665 * 2.0;
 	Eigen::Vector3d cart_pos;
-	Eigen::Vector3d delta;
-	delta << control_vec[0], control_vec[1], control_vec[2];
+	Eigen::Matrix3d rotator;
+	Eigen::Vector3d axis;
 	Eigen::VectorXd gains(6);
 	std::vector<double> joints;
 	Eigen::VectorXd goal_joint_positions(7);
-	gains << 2, 2, 1, 0.05, 0.05, 0.05;
-	if (flip)
-	{
-		delta[2] *= -1.0;
+	cart_pos = spherical_to_cartesian(spherical_position);
+	if (std::abs(control_vec[1]) > 0 || std::abs(control_vec[2]) > 0)
+	{	
+		axis = Eigen::Vector3d::UnitX() * (control_vec[2]) + Eigen::Vector3d::UnitY() * (control_vec[1]);
+		axis.normalize();
+		rotator = Eigen::AngleAxisd(delta_radians, axis);
+		cart_pos = rotator * cart_pos;
+		spherical_position = cartesian_to_spherical(cart_pos);
 	}
+	// std::cout << "Cartesian position: \n**************\n"
+	// 		  << cart_pos << "\n***********" << std::endl;
+	spherical_position[0] += control_vec[0];
 	yaw_offset += control_vec[3];
-	std::cout << "Yaw offset: " << yaw_offset << "\n";
-	if (std::abs(spherical_position[2] + control_vec[2]) > M_PI)
-	{
-		delta[2] += (control_vec[2] > 0.0) ? -2.0 * M_PI : +2.0 * M_PI;
-	}
-	if ((spherical_position[1] + control_vec[1]) < 0.0)
-	{
-		flip = !flip;
-		delta[1] = -control_vec[1] - 2.0 * spherical_position[1];
-		delta[2] += (spherical_position[1] > 0.0) ? -M_PI : M_PI;
-	}
 	std::cout << "Spherical position: \n**************\n"
 			  << spherical_position << "\n***********" << std::endl;
-	Eigen::Vector3d goal_cartesian = spherical_to_cartesian(spherical_position + delta) + object_position;
+	cart_pos = spherical_to_cartesian(spherical_position);
+	cart_pos = cart_pos + object_position;
 
 	quaternion = (inwards_normal_to_quaternion(spherical_position));
 	ortn[0] = quaternion.x();
@@ -108,17 +106,17 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	ortn[1] = quaternion.y();
 	ortn[2] = quaternion.z();
 	ortn[3] = quaternion.w();
-	full_pose[0] = goal_cartesian[0];
-	full_pose[1] = goal_cartesian[1];
-	full_pose[2] = goal_cartesian[2];
+	full_pose[0] = cart_pos[0];
+	full_pose[1] = cart_pos[1];
+	full_pose[2] = cart_pos[2];
 	full_pose[3] = ortn[0];
 	full_pose[4] = ortn[1];
 	full_pose[5] = ortn[2];
 	full_pose[6] = ortn[3];
 	geometry_msgs::Pose pose_msg;
-	pose_msg.position.x = goal_cartesian[0];
-	pose_msg.position.y = goal_cartesian[1];
-	pose_msg.position.z = goal_cartesian[2];
+	pose_msg.position.x = cart_pos[0];
+	pose_msg.position.y = cart_pos[1];
+	pose_msg.position.z = cart_pos[2];
 	pose_msg.orientation.x = ortn[0];
 	pose_msg.orientation.y = ortn[1];
 	pose_msg.orientation.z = ortn[2];
@@ -132,7 +130,6 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
 			goal_joint_positions[i] = joints[i];
 		}
-		spherical_position += delta;
 		arm->call_move_joints(goal_joint_positions, true);
 	}
 	else
@@ -415,19 +412,29 @@ int UVSControl::teleop_grasp_step()
 			return 2;
 		}
 	}
-	else if (teleop_direction[0] == -5.0 and !(ready_to_grasp))
+	else if (teleop_direction[1] == 5.0)
 	{
-		bhand->open_grasp();
-		bhand->open_spread();
-		std::cout << "Opening" << std::endl;
-		ready_to_grasp = true;
+		is_spread = !is_spread;
+		if (is_spread)
+		{
+			std::cout << "Opening spread" << std::endl;
+			bhand->open_spread();
+			return 2;
+		}
+		std::cout << "Closing spread" << std::endl;
+		bhand->close_spread();
 		return 2;
 	}
-	else if (teleop_direction[0] == 5.0 and ready_to_grasp)
+	else if (teleop_direction[0] == -5.0)
+	{
+		bhand->open_grasp();
+		std::cout << "Opening" << std::endl;
+		return 2;
+	}
+	else if (teleop_direction[0] == 5.0)
 	{
 		bhand->close_grasp();
 		std::cout << "Grasping" << std::endl;
-		ready_to_grasp = false;
 		return 2;
 	}
 	Eigen::VectorXd control_vec(4);
@@ -531,7 +538,7 @@ void UVSControl::teleop_grasp()
 	{
 		if (teleop_move)
 		{
-			std::cout << "received teleop grasp command" << std::endl;
+			// std::cout << "received teleop grasp command" << std::endl;
 			teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
 			// ros::Time begin = ros::Time::now();
@@ -672,8 +679,8 @@ Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd
 	Eigen::VectorXd times(3);
 	for (int i = 0; i < delta.size(); ++i)
 	{
-		length = fabs(delta[i]);
-		sign = (int)delta[i] / fabs(delta[i]);
+		length = std::abs(delta[i]);
+		sign = (int)delta[i] / std::abs(delta[i]);
 		v_init = sign * current_velocities[i];
 		/* First, is the length too short to decellerate to stop?
 	     * |\
@@ -717,7 +724,7 @@ Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd
 	     * | __        |\__
 	     * |/  \    or |   \
 	     * |    \__    |    \__ */
-		double time_endup = fabs(v_diff) / acc;
+		double time_endup = std::abs(v_diff) / acc;
 		double s_endup = time_endup * (vel + v_init) / 2;
 		/* Compute the ramp down portion */
 		double s_startdown = length - 0.5 * vel * vel / acc;

@@ -44,6 +44,7 @@ class UVSControl
 	BHandControl *bhand;
 	bool reset;
 	bool move_now;
+	bool is_spread = false;
 	bool teleop_move;
 	int mode = 0;
 	bool flip = false;
@@ -62,7 +63,7 @@ class UVSControl
 	Eigen::Vector2d teleop_direction;
 	Eigen::Vector3d temp_object_position;
 	Eigen::Vector3d object_position{0.5, 0.0, 0.0};
-	Eigen::Vector3d spherical_position{0.3, 0.0, M_PI}; // r, theta, phi 
+	Eigen::Vector3d spherical_position{0.3, 0.0, 0.0}; // r, theta, phi 
 	Eigen::VectorXd previous_eef_position;
 	Eigen::VectorXd previous_joint_positions;
 	Eigen::MatrixXd previous_jacobian;
