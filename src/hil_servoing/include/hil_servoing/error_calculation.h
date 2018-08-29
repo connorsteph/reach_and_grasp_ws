@@ -15,9 +15,9 @@
 #include "hil_servoing/Error.h"
 #include "hil_servoing/ErrorInfo.h"
 #include "hil_servoing/TrackPoint.h"
-#include "hil_servoing/TaskIds.h"
 #include "hil_servoing/TrackedPoints.h"
 #include "hil_servoing/EndEffectorPoints.h"
+#include "hil_servoing/TaskIds.h"
 #include "hil_servoing/hil_utilities.h"
 #include <sstream>
 #include <vector>
@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <unistd.h>
+
 
 class ErrorCalculator 
 {
@@ -104,8 +105,6 @@ class ErrorCalculator
 		    	new_eef2 = true;
 			}
         }
-
-
         void callback_task_ids(const hil_servoing::TaskIds::ConstPtr& msg)
         {
         	hil_servoing::TaskIds tasks = *msg;
@@ -115,8 +114,6 @@ class ErrorCalculator
         	}
 			task_ids = temp;
         }
-
-
         void callback_calculate(const std_msgs::Bool::ConstPtr& msg)
         {
 			bool b = msg->data;

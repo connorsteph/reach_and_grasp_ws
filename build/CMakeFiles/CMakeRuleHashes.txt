@@ -6,6 +6,10 @@ cb1e9a19bca0987c7c9bd9477a06d5e8 /home/froglake/reach_and_grasp_ws/devel/include
 56b3fed820003a8904567077c101b0de /home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h
 8039c7910e67b66b50e51f94f8186932 /home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/TrackPoint.h
 a53609d8bb2d97d0a867fde8675185db /home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/TrackedPoints.h
+439e11011c3f626bc58fcee9634ab62c /home/froglake/reach_and_grasp_ws/devel/include/mtf_bridge/BufferInit.h
+fdc99f79d332c87acb3e546198cd0002 /home/froglake/reach_and_grasp_ws/devel/include/mtf_bridge/Patch.h
+4bcb5713871ce7a00589164861b74bfa /home/froglake/reach_and_grasp_ws/devel/include/mtf_bridge/PatchTrackers.h
+88c8da5cfdd5983e55f7370f3ca4ab0f /home/froglake/reach_and_grasp_ws/devel/include/mtf_bridge/Point.h
 cba8dc9743c5cc675ead7c15deedea2b /home/froglake/reach_and_grasp_ws/devel/include/wam_control/BHandFingerPos.h
 8866df777b7eb475ad12dd0d508e1adc /home/froglake/reach_and_grasp_ws/devel/include/wam_control/BHandFingerVel.h
 d2481e429cc4190f2adba6e8b79c5021 /home/froglake/reach_and_grasp_ws/devel/include/wam_control/BHandGraspPos.h
@@ -44,6 +48,11 @@ c6726f43fe676a263c77a2096125a2c4 /home/froglake/reach_and_grasp_ws/devel/lib/pyt
 3e2501353ec816ef455999d242da61dc /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/hil_servoing/msg/_TrackPoint.py
 b00804d2f8510b5ea0d9c6ab7491bbaf /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/hil_servoing/msg/_TrackedPoints.py
 52eb4d0bd843d24b3af934991d431dae /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/hil_servoing/msg/__init__.py
+33d59800da41e469100e6f11f090dc0d /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/mtf_bridge/msg/_BufferInit.py
+5f6813f317bceca49d589c5915197b03 /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/mtf_bridge/msg/_Patch.py
+a473e1f0d080f20556192093db676a15 /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/mtf_bridge/msg/_PatchTrackers.py
+f60843fd71320cb1a23af04a0b144b9c /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/mtf_bridge/msg/_Point.py
+7efb14b926e32b340bd6ae5947918dbf /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/mtf_bridge/msg/__init__.py
 8d9216d0e4a53bf1732816cc4c61def9 /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_MatrixMN.py
 cc19ea45cf3d82578ae4dc69012b9e6c /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTCartPos.py
 d93b954f519ca277477824ad1ccd1b24 /home/froglake/reach_and_grasp_ws/devel/lib/python2.7/dist-packages/wam_control/msg/_RTCartVel.py
@@ -83,6 +92,10 @@ ee27c1b93e16fcff41ee0144e67aa3e3 /home/froglake/reach_and_grasp_ws/devel/lib/pyt
 bef35ead1b12cd7316e9af4a7e342c16 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/hil_servoing/msg/Teleop.lisp
 7f5a00d8bc96a8c6a6b12265cb0b42bd /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/hil_servoing/msg/TrackPoint.lisp
 1c083c85fad7b86d096b5394a94bd930 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/hil_servoing/msg/TrackedPoints.lisp
+7551dc28dccaa530d87eb77b47dc3f0e /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/mtf_bridge/msg/BufferInit.lisp
+f6aa04be6344f3eee86c6e25bc22664b /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/mtf_bridge/msg/Patch.lisp
+d44eefdf2e1f113bcd8a4ae11a840cb8 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/mtf_bridge/msg/PatchTrackers.lisp
+fd442ae37bce73bf4b1a881ccb75acee /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/mtf_bridge/msg/Point.lisp
 9f282e251fe3ffbf3100ffd24c5bef68 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/wam_control/msg/MatrixMN.lisp
 400487d812ba1cb8e2c3c1dd7eb77344 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/wam_control/msg/RTCartPos.lisp
 45622cb031c535161127a82d122530c8 /home/froglake/reach_and_grasp_ws/devel/share/common-lisp/ros/wam_control/msg/RTCartVel.lisp
@@ -124,6 +137,13 @@ fcbc59cdaaf30bbd99ee3a53ec00aa6f hil_servoing/CMakeFiles/_hil_servoing_generate_
 ffc7cba07e8630ad2b5fc32c84531774 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp
 ffc7cba07e8630ad2b5fc32c84531774 hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp
 ffc7cba07e8630ad2b5fc32c84531774 hil_servoing/CMakeFiles/hil_servoing_generate_messages_py
+17906a25fc9a5c4bc00326f8556d0885 mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_BufferInit
+f91ad9131450d875a574b0a712207c63 mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch
+9d0023c90d55f225ce651902d8570747 mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers
+478485c997ce3d87fa0edb65b4ffe8e9 mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point
+8451bcc46c3e0929536b054a2c10c9fc mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp
+8451bcc46c3e0929536b054a2c10c9fc mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp
+8451bcc46c3e0929536b054a2c10c9fc mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py
 7b7e8d6be6bb433639519fba84b919a6 wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerPos
 bd01d4f31ef76d5d4276bd5597fad3fc wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel
 8baf9ac386352bd6241d826885cd7206 wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos

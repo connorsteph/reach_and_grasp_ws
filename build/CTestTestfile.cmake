@@ -6,6 +6,8 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs(gtest)
 subdirs(barrett_model)
+subdirs(mtf_bridge)
+subdirs(visual_servoing_gui)
 subdirs(wam_control)
 subdirs(barrett_moveit/barrett_wam_moveit_config)
 subdirs(hil_servoing)

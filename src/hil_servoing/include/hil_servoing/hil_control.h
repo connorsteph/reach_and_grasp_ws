@@ -103,6 +103,7 @@ class UVSControl
 	ros::Subscriber eef_sub;
 	ros::Subscriber reset_sub;
 	ros::Subscriber teleop_sub;
+	ros::Subscriber joy_sub;
 	Eigen::VectorXd singular_values;
 	Eigen::VectorXd image_error_vector;
 	Eigen::VectorXd image_eef_pos;
@@ -216,6 +217,8 @@ class UVSControl
 		teleop_direction[1] = command.dir_2D[1];
 		teleop_move = true;
 	}
+	
+	void joy_cb();
 };
 
 #endif // UVS_CONTROL_H

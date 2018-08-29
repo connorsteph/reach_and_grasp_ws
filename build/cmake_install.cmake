@@ -118,6 +118,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/froglake/reach_and_grasp_ws/build/gtest/cmake_install.cmake")
   include("/home/froglake/reach_and_grasp_ws/build/barrett_model/cmake_install.cmake")
+  include("/home/froglake/reach_and_grasp_ws/build/mtf_bridge/cmake_install.cmake")
+  include("/home/froglake/reach_and_grasp_ws/build/visual_servoing_gui/cmake_install.cmake")
   include("/home/froglake/reach_and_grasp_ws/build/wam_control/cmake_install.cmake")
   include("/home/froglake/reach_and_grasp_ws/build/barrett_moveit/barrett_wam_moveit_config/cmake_install.cmake")
   include("/home/froglake/reach_and_grasp_ws/build/hil_servoing/cmake_install.cmake")

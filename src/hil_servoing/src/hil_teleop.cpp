@@ -83,7 +83,7 @@ void VSTeleop::keyLoop()
       exit(-1);
     }
     // ROS_INFO("value: 0x%02X\n", c);
-    // ROS_DEBUG("value: 0x%02X\n", c);
+    ROS_DEBUG("value: 0x%02X\n", c);
 
     switch (c)
     {

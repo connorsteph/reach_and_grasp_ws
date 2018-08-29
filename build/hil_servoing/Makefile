@@ -601,48 +601,6 @@ octomap_msgs_generate_messages_py/fast:
 .PHONY : octomap_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-.PHONY : hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_cpp: hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-.PHONY : sensor_msgs_generate_messages_cpp
-
-# fast build rule for target.
-sensor_msgs_generate_messages_cpp/fast:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make hil_servoing/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
-.PHONY : sensor_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-.PHONY : hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_lisp: hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-.PHONY : sensor_msgs_generate_messages_lisp
-
-# fast build rule for target.
-sensor_msgs_generate_messages_lisp/fast:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make hil_servoing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
-.PHONY : sensor_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_py: hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : sensor_msgs_generate_messages_py
-
-# fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make hil_servoing/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
-
-# Convenience name for target.
 hil_servoing/CMakeFiles/shape_msgs_generate_messages_cpp.dir/rule:
 	cd /home/froglake/reach_and_grasp_ws/build && $(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/shape_msgs_generate_messages_cpp.dir/rule
 .PHONY : hil_servoing/CMakeFiles/shape_msgs_generate_messages_cpp.dir/rule
@@ -878,7 +836,6 @@ help:
 	@echo "... trajectory_msgs_generate_messages_py"
 	@echo "... hil_servoing"
 	@echo "... object_recognition_msgs_generate_messages_py"
-	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... trajectory_msgs_generate_messages_cpp"
 	@echo "... moveit_msgs_generate_messages_cpp"
 	@echo "... edit_cache"
@@ -892,7 +849,6 @@ help:
 	@echo "... moveit_ros_planning_gencfg"
 	@echo "... octomap_msgs_generate_messages_cpp"
 	@echo "... moveit_msgs_generate_messages_py"
-	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... hil_servoing_generate_messages_py"
 	@echo "... shape_msgs_generate_messages_lisp"
 	@echo "... list_install_components"
@@ -901,7 +857,6 @@ help:
 	@echo "... shape_msgs_generate_messages_py"
 	@echo "... shape_msgs_generate_messages_cpp"
 	@echo "... error_calculation"
-	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... visualization_msgs_generate_messages_lisp"
 	@echo "... trajectory_msgs_generate_messages_lisp"
 	@echo "... hil_servoing_gencpp"

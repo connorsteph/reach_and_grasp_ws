@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/froglake/irl_workspace/devel/include",
+        "/home/froglake/vs_workspace/devel/include",
+        "/opt/ros/indigo/include",
+        "/home/froglake/vs_workspace/src/uncalibrated_visual_servoing/include",
+        "/home/froglake/vs_workspace/src/mtf_bridge/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}
