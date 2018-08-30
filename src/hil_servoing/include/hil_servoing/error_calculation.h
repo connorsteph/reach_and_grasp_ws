@@ -82,7 +82,7 @@ class ErrorCalculator
 			        p[1] = c.points[i].y;			        
 			        v.push_back(p);
 			    }
-			    end_effector_position = v[0];
+			    end_effector_position = v[1];
     			current_error_vector = calculate_error(v);
     			new_error = true;
     			new_eef = true;
@@ -99,7 +99,7 @@ class ErrorCalculator
 			        p2[1] = c2.points[i].y;
 			        v2.push_back(p2);
 			    }
-			    end_effector_position2 = v2[0];
+			    end_effector_position2 = v2[1];
 		    	current_error_vector2 = calculate_error(v2);
 		    	new_error2 = true;
 		    	new_eef2 = true;

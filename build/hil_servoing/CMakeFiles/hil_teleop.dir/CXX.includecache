@@ -6,22 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/froglake/reach_and_grasp_ws/devel/include/hil_servoing/Teleop.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-
 /home/froglake/reach_and_grasp_ws/src/hil_servoing/src/hil_teleop.cpp
 ros/ros.h
 -
@@ -258,10 +242,6 @@ boost/make_shared.hpp
 cstddef
 -
 memory
--
-
-/opt/ros/indigo/include/ros/message_operations.h
-ostream
 -
 
 /opt/ros/indigo/include/ros/message_traits.h

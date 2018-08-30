@@ -12,7 +12,6 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 	default_lambda = 0.15;
 	reset = false;
 	move_now = false;
-	ready_to_grasp = false;
 	// prefix = "/home/laura/ComputerVision/vs_workspace/src/hil_servoing/log_data/";
 	prefix = "/home/froglake/vs_workspace/src/hil_servoing/log_data/";
 	filename = prefix + current_time() + ".txt";
@@ -135,10 +134,7 @@ bool UVSControl::convergence_check(const Eigen::VectorXd &current_error)
 		object_position = temp_object_position;
 		Eigen::Vector3d tool_position = getToolPosition(arm->get_positions(), total_joints);
 		std::cout << "Object position:" << object_position[0] << ", " << object_position[1] << ", " << object_position[2] << std::endl;
-		control_radius = 0.3;
-		Eigen::Vector3d goal = control_radius * vertical;
-		arm->call_move_cartesian(goal + object_position); //TODO: consider adding blocking to cart move
-		spherical_position << control_radius, 0.0, 0.0;
+		spherical_position = cartesian_to_spherical(tool_position - object_position);
 		return true;
 	}
 	lambda = std::max(0.1, pixel_step_size / n);
@@ -168,7 +164,7 @@ bool UVSControl::broyden_update(double alpha)
 	}
 	current_eef_position = get_eef_position();
 	dy = current_eef_position - previous_eef_position;
-	update = ((((-dy) - jacobian * dq)) * dq.transpose()) / (dq_norm * dq_norm);
+	update = ((dy - jacobian * dq) * dq.transpose()) / (dq_norm * dq_norm);
 	previous_jacobian = jacobian;
 	jacobian = jacobian + (alpha * update);
 
@@ -314,7 +310,7 @@ void UVSControl::teleop_grasp()
 	std::cout << "\n**************************************" << std::endl;
 	while (true)
 	{
-		ros::Rate(30).sleep();
+		ros::Rate(10).sleep();
 		if (teleop_move)
 		{
 			// std::cout << "received teleop grasp command" << std::endl;
@@ -341,7 +337,7 @@ void UVSControl::teleop_grasp()
 int UVSControl::teleop_grasp_step()
 {
 	Eigen::VectorXd joints;
-	double delta_yaw = M_PI / 40;	 // 45 degrees per second at 30Hz
+	double delta_yaw = M_PI / 40;	  // 45 degrees per second at 30Hz
 	double delta_radians = M_PI / 240; // 5.4 degrees per second at 30Hz
 	std::cout << teleop_direction << std::endl;
 	if (teleop_direction[0] == -9.0)
@@ -400,12 +396,12 @@ int UVSControl::teleop_grasp_step()
 		control_vec[2] = delta_radians * teleop_direction[0];
 		break;
 	case 1:
-		control_vec[0] = 0.01 * teleop_direction[1]; // 10 cm/s at 30Hz
+		control_vec[0] = 0.01 * teleop_direction[1];
 		control_vec[3] = delta_yaw * teleop_direction[0];
 		break;
 	case 2:
-		object_position[0] += 0.00333 * teleop_direction[1];
-		object_position[1] -= 0.00167 * teleop_direction[0]; // 5 cm/s due to weak wrist joint
+		object_position[0] -= 0.00333 * teleop_direction[1];
+		object_position[1] -= 0.00167 * teleop_direction[0]; 
 		break;
 	}
 	if (UVSControl::sphere_move(control_vec))
@@ -424,7 +420,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	Eigen::Vector3d rpy;
 	Eigen::VectorXd full_pose(7);
 	// double delta_radians = 0.017453292519; // one degree
-	double delta_radians = M_PI / 20; // 45 degrees per second at 30Hz
+	double delta_radians = M_PI / 180;
 	Eigen::Vector3d cart_pos;
 	Eigen::Matrix3d rotator;
 	Eigen::Vector3d axis;
@@ -454,13 +450,13 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	ortn[1] = quaternion.y();
 	ortn[2] = quaternion.z();
 	ortn[3] = quaternion.w();
-	rpy = toEulerAngle(ortn);
-	rpy[2] += yaw_offset; // modify orientation yaw by user incremental offset
-	quaternion = toQuaternion(rpy);
-	ortn[0] = quaternion.x();
-	ortn[1] = quaternion.y();
-	ortn[2] = quaternion.z();
-	ortn[3] = quaternion.w();
+	// rpy = toEulerAngle(ortn);
+	// rpy[2] += yaw_offset; // modify orientation yaw by user incremental offset
+	// quaternion = toQuaternion(rpy);
+	// ortn[0] = quaternion.x();
+	// ortn[1] = quaternion.y();
+	// ortn[2] = quaternion.z();
+	// ortn[3] = quaternion.w();
 	full_pose[0] = cart_pos[0];
 	full_pose[1] = cart_pos[1];
 	full_pose[2] = cart_pos[2];
@@ -476,7 +472,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	pose_msg.orientation.y = ortn[1];
 	pose_msg.orientation.z = ortn[2];
 	pose_msg.orientation.w = ortn[3];
-	bool found_ik = kinematic_state->setFromIK(joint_model_group, pose_msg, "wam/wrist_palm_stump_link", 5, 0.1);
+	bool found_ik = kinematic_state->setFromIK(joint_model_group, pose_msg, "wam/wrist_palm_stump_link", 3, 0.1);
 	if (found_ik)
 	{
 		kinematic_state->copyJointGroupPositions(joint_model_group, joints);
@@ -485,7 +481,16 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
 			goal_joint_positions[i] = joints[i];
 		}
-		arm->call_move_joints(goal_joint_positions, true);
+		kinematic_state->setJointGroupPositions(joint_model_group, goal_joint_positions);
+		// kinematic_state->enforceBounds();
+		// kinematic_state->copyJointGroupPositions(joint_model_group, joints);
+		// for (std::size_t i = 0; i < joint_names.size(); ++i)
+		// {
+		// 	// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
+		// 	goal_joint_positions[i] = joints[i];
+		// }
+		goal_joint_positions[6] += yaw_offset;
+		arm->call_move_joints(goal_joint_positions, false);
 	}
 	else
 	{
@@ -604,7 +609,7 @@ bool UVSControl::jacobian_estimate(double perturbation_delta)
 			e2 = get_eef_position();
 			ros::Duration(0.2).sleep();
 			arm->call_move_joints(position, true);
-			jacobian.col(j) = (e1 - e2) / perturbation_delta;
+			jacobian.col(j) = -(e1 - e2) / perturbation_delta;
 			j++;
 		}
 	}
@@ -844,7 +849,7 @@ void UVSControl::loop()
 			arm->move_to_initial_position();
 			bhand->open_grasp();
 			bhand->close_spread();
-			ready_to_grasp = false;
+			is_spread = false;
 			break;
 		case 'd':
 			perturbation_delta = degreesToRadians(double_input(1, 20));
@@ -897,9 +902,14 @@ void UVSControl::loop()
 			}
 			break;
 		case 'w':
+		{
+			object_position = temp_object_position;
+			spherical_position = cartesian_to_spherical(getToolPosition(arm->get_positions(), total_joints) - object_position);
+			spherical_position[0] += 0.02;
 			teleop_grasp();
 			lambda = default_lambda;
 			break;
+		}
 		case 'h':
 			arm->stop_visual_fix();
 			arm->move_to_home_position();

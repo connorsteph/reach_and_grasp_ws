@@ -3,8 +3,8 @@
 #include <image_transport/image_transport.h>
 #include "mtf_bridge/InterfaceTopicHandler.h"
 #include "mtf_bridge/PatchTrackers.h"
-#include "uncalibrated_visual_servoing/TrackedPoints.h"
-#include "uncalibrated_visual_servoing/TrackPoint.h"
+#include "hil_servoing/TrackedPoints.h"
+#include "hil_servoing/TrackPoint.h"
 
 // OpenCV
 #include <opencv2/core/core.hpp>
@@ -97,7 +97,7 @@ cv::Point getPatchCenter(const cv::Point2d (&cv_corners)[4]) {
 	Eigen::Vector3d br(cv_corners[2].x, cv_corners[2].y, 1);
 	Eigen::Vector3d bl(cv_corners[3].x, cv_corners[3].y, 1);
 
-	Eigen::Vector3d center_vec = center_vec = tl.cross(br).cross(tr.cross(bl));
+	Eigen::Vector3d center_vec = tl.cross(br).cross(tr.cross(bl));
 
 	cv::Point center;
 	center.x = center_vec(0) / center_vec(2);
@@ -127,11 +127,11 @@ std::string getCenter(TrackerStruct &tracker) {
 	return str_center;
 }
 
-uncalibrated_visual_servoing::TrackPoint getCenterPoint(TrackerStruct &tracker) {
+hil_servoing::TrackPoint getCenterPoint(TrackerStruct &tracker) {
 	cv::Point2d cv_corners[4];
 	mtf::utils::Corners(tracker.getRegion()).points(cv_corners);
 	cv::Point center_point = getPatchCenter(cv_corners);
-	uncalibrated_visual_servoing::TrackPoint p;
+	hil_servoing::TrackPoint p;
 	p.x = center_point.x;
 	p.y = center_point.y;
 	return p;
@@ -151,13 +151,14 @@ void updateTrackers() {
 		topic_handler->doneReset();
 	} else {
 	    std::string patch_msg = "";
-	    uncalibrated_visual_servoing::TrackedPoints center_msg;
+	    hil_servoing::TrackedPoints center_msg;
 		for(std::vector<TrackerStruct>::iterator tracker = trackers.begin(); 
 			tracker != trackers.end(); ++tracker) {
 			(*tracker).update(*(topic_handler->getFrame()), topic_handler->getFrameID());
 			std::string patch = getPatch(*tracker);
-			// std::string center = getCenter(*tracker);
-			uncalibrated_visual_servoing::TrackPoint p = getCenterPoint(*tracker);
+			std::string center = getCenter(*tracker);
+			hil_servoing::TrackPoint p = getCenterPoint(*tracker);
+			// std::cout << center << std::endl;
 			patch_msg += patch;
 			center_msg.points.push_back(p);
 		}
@@ -319,7 +320,7 @@ int main(int argc, char *argv[]) {
 	std::cout << "MTF: Publishing to ~/trackers/patch_tracker\n";
 	std::cout << "MTF: Publishing to ~/trackers/centers\n";
 	patch_pub = nh_.advertise<std_msgs::String>("patch_tracker", 1);
-	center_pub = nh_.advertise<uncalibrated_visual_servoing::TrackedPoints>("centers", 1);
+	center_pub = nh_.advertise<hil_servoing::TrackedPoints>("centers", 1);
 	ros::Rate loop_rate(rate);
 
 	while(!topic_handler->isInitialized()) {
