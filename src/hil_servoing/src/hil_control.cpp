@@ -135,10 +135,7 @@ bool HILControl::convergence_check(const Eigen::VectorXd &current_error)
 		object_position = temp_object_position;
 		Eigen::Vector3d tool_position = getToolPosition(arm->get_positions(), total_joints);
 		std::cout << "Object position:" << object_position[0] << ", " << object_position[1] << ", " << object_position[2] << std::endl;
-		control_radius = 0.3;
-		Eigen::Vector3d goal = control_radius * vertical;
-		arm->call_move_cartesian(goal + object_position); //TODO: consider adding blocking to cart move
-		spherical_position << control_radius, 0.0, 0.0;
+		spherical_position = cartesian_to_spherical(tool_position - object_position);
 		return true;
 	}
 	lambda = std::max(0.1, pixel_step_size / n);
@@ -396,7 +393,7 @@ int HILControl::teleop_grasp_step()
 	control_vec[1] = controller_axes[3];
 	control_vec[2] = -controller_axes[2];
 	control_vec[3] = controller_buttons[5] - controller_buttons[4];
-	
+
 	if (HILControl::sphere_move(control_vec))
 	{
 		return 2;
@@ -887,9 +884,14 @@ void HILControl::loop()
 			}
 			break;
 		case 'w':
+		{
+			object_position = temp_object_position;
+			spherical_position = cartesian_to_spherical(getToolPosition(arm->get_positions(), total_joints) - object_position);
+			spherical_position[0] += 0.02;
 			teleop_grasp();
 			lambda = default_lambda;
 			break;
+		}
 		case 'h':
 			arm->stop_visual_fix();
 			arm->move_to_home_position();
