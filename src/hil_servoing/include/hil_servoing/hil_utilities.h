@@ -2,8 +2,8 @@
  * lpetrich 01/07/18
  */
 
-#ifndef UVS_UTILITIES_H
-#define UVS_UTILITIES_H
+#ifndef HIL_UTILITIES_H
+#define HIL_UTILITIES_H
 
 #include <Eigen/Dense>
 #include <Eigen/SVD>
@@ -387,4 +387,4 @@ Eigen::VectorXd vector_target(Eigen::VectorXd current_state, std::vector<int> jo
     return target_state;
 }
 
-#endif // UVS_UTILITIES_H
+#endif // HIL_UTILITIES_H

@@ -97,7 +97,7 @@ cv::Point getPatchCenter(const cv::Point2d (&cv_corners)[4]) {
 	Eigen::Vector3d br(cv_corners[2].x, cv_corners[2].y, 1);
 	Eigen::Vector3d bl(cv_corners[3].x, cv_corners[3].y, 1);
 
-	Eigen::Vector3d center_vec = center_vec = tl.cross(br).cross(tr.cross(bl));
+	Eigen::Vector3d center_vec = tl.cross(br).cross(tr.cross(bl));
 
 	cv::Point center;
 	center.x = center_vec(0) / center_vec(2);
@@ -156,7 +156,7 @@ void updateTrackers() {
 			tracker != trackers.end(); ++tracker) {
 			(*tracker).update(*(topic_handler->getFrame()), topic_handler->getFrameID());
 			std::string patch = getPatch(*tracker);
-			// std::string center = getCenter(*tracker);
+			std::string center = getCenter(*tracker);
 			uncalibrated_visual_servoing::TrackPoint p = getCenterPoint(*tracker);
 			patch_msg += patch;
 			center_msg.points.push_back(p);

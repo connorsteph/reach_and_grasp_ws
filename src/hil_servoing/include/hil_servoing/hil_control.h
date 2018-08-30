@@ -2,8 +2,8 @@
  * lpetrich 01/07/18
  */
 
-#ifndef UVS_CONTROL_H
-#define UVS_CONTROL_H
+#ifndef HIL_CONTROL_H
+#define HIL_CONTROL_H
 
 #include <ros/ros.h>
 #include <iostream>
@@ -14,6 +14,7 @@
 #include <boost/timer.hpp>
 #include "std_msgs/Bool.h"
 #include "sensor_msgs/JointState.h"
+#include "sensor_msgs/Joy.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Point.h"
 #include "wam_control/misc_utilities.h"
@@ -37,7 +38,7 @@
 // Kinematics
 #include <moveit_msgs/GetPositionIK.h>
 
-class UVSControl
+class HILControl
 {
   public:
 	ArmControl *arm;
@@ -45,10 +46,8 @@ class UVSControl
 	bool reset;
 	bool move_now;
 	bool is_spread = false;
+	bool grip_closed = false;
 	bool teleop_move;
-	int mode = 0;
-	bool flip = false;
-	bool ready_to_grasp;
 	int dof;
 	int total_joints;
 	double image_tol;
@@ -60,10 +59,14 @@ class UVSControl
 	std::string msg;
 	std::string prefix;
 	std::string filename;
+	std::vector<float> controller_axes;
+	std::vector<int> controller_buttons;
+	std::vector<bool> active_buttons_map = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0};
+	std::vector<bool> active_axes_map = {1, 1, 1, 1, 0, 0};
 	Eigen::Vector2d teleop_direction;
 	Eigen::Vector3d temp_object_position;
 	Eigen::Vector3d object_position{0.5, 0.0, 0.0};
-	Eigen::Vector3d spherical_position{0.3, 0.0, 0.0}; // r, theta, phi 
+	Eigen::Vector3d spherical_position{0.3, 0.0, 0.0}; // r, theta, phi
 	Eigen::VectorXd previous_eef_position;
 	Eigen::VectorXd previous_joint_positions;
 	Eigen::MatrixXd previous_jacobian;
@@ -71,8 +74,8 @@ class UVSControl
 	Eigen::MatrixXd jacobian;
 	Eigen::MatrixXd jacobian_inverse;
 	std::vector<int> active_joints = {1, 1, 1, 1, 1, 1, 1};
-	UVSControl(ros::NodeHandle nh);
-	~UVSControl();
+	HILControl(ros::NodeHandle nh);
+	~HILControl();
 	Eigen::VectorXd calculate_delta_q();
 	Eigen::VectorXd calculate_target(const Eigen::VectorXd &pos, const Eigen::VectorXd &delta);
 	Eigen::VectorXd calculate_step(const Eigen::VectorXd &current_error_value);
@@ -95,7 +98,6 @@ class UVSControl
 	robot_model_loader::RobotModelLoader robot_model_loader;
 	robot_model::RobotModelPtr kinematic_model;
 	robot_state::RobotStatePtr kinematic_state;
-	
 
   private:
 	// Callbacks
@@ -217,8 +219,48 @@ class UVSControl
 		teleop_direction[1] = command.dir_2D[1];
 		teleop_move = true;
 	}
-	
-	void joy_cb();
+
+	void joy_cb(sensor_msgs::Joy::ConstPtr controllerStatePtr)
+	{
+		const std::vector<float> temp_controller_axes = controllerStatePtr->axes;
+		const std::vector<int> temp_controller_buttons = controllerStatePtr->buttons;
+		const float deadzone = 0.2;
+		bool sentinel = false;
+		// std::cout << "Callback\n";
+		for (int i = 0; i < temp_controller_axes.size(); ++i)
+		{
+			if (active_axes_map[i])
+			{
+				// std::cout << i << temp_controller_axes[i] << std::endl;
+				if (fabs(temp_controller_axes[i]) > deadzone)
+				{
+					sentinel = true;
+					break;
+				}
+			}
+		}
+		if (!sentinel)
+		{
+			for (int i = 0; i < temp_controller_buttons.size(); ++i)
+			{
+				if (active_buttons_map[i])
+				{
+					if (abs(temp_controller_buttons[i]) > 0)
+					{
+						sentinel = true;
+						break;
+					}
+				}
+			}
+		}
+		if (sentinel)
+		{
+			controller_axes = temp_controller_axes;
+			controller_buttons = temp_controller_buttons;
+			teleop_move = true;
+			// std::cout << "Here\n";
+		}
+	}
 };
 
-#endif // UVS_CONTROL_H
+#endif // HIL_CONTROL_H

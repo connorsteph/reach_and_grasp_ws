@@ -4,7 +4,7 @@
 #include <fstream>
 #include "hil_servoing/hil_control.h"
 
-UVSControl::UVSControl(ros::NodeHandle nh_)
+HILControl::HILControl(ros::NodeHandle nh_)
 {
 	dof = 0;
 	total_joints = 0;
@@ -12,7 +12,6 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 	default_lambda = 0.15;
 	reset = false;
 	move_now = false;
-	ready_to_grasp = false;
 	// prefix = "/home/laura/ComputerVision/vs_workspace/src/hil_servoing/log_data/";
 	prefix = "/home/froglake/vs_workspace/src/hil_servoing/log_data/";
 	filename = prefix + current_time() + ".txt";
@@ -42,11 +41,12 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 		exit(EXIT_FAILURE);
 	}
 	ROS_INFO_STREAM("Robot has " << dof << " DOF");
-	error_sub = nh_.subscribe("/image_error", 1, &UVSControl::error_cb, this);
-	eef_sub = nh_.subscribe("/eef_pos", 1, &UVSControl::eef_cb, this);
-	reset_sub = nh_.subscribe("/reset", 1, &UVSControl::reset_cb, this);
-	// move_sub = nh_.subscribe("/move", 1, &UVSControl::move_cb, this);
-	teleop_sub = nh_.subscribe("/teleop", 1, &UVSControl::teleop_cb, this);
+	error_sub = nh_.subscribe("/image_error", 1, &HILControl::error_cb, this);
+	eef_sub = nh_.subscribe("/eef_pos", 1, &HILControl::eef_cb, this);
+	reset_sub = nh_.subscribe("/reset", 1, &HILControl::reset_cb, this);
+	// move_sub = nh_.subscribe("/move", 1, &HILControl::move_cb, this);
+	teleop_sub = nh_.subscribe("/teleop", 1, &HILControl::teleop_cb, this);
+	joy_sub = nh_.subscribe("/joy", 1, &HILControl::joy_cb, this);
 	kinematic_model = robot_model_loader.getModel();
 	robot_model_loader = robot_model_loader::RobotModelLoader("robot_description");
 	// ROS_INFO("Model frame: %s", kinematic_model->getModelFrame().c_str());
@@ -54,14 +54,14 @@ UVSControl::UVSControl(ros::NodeHandle nh_)
 	kinematic_state->setToDefaultValues();
 }
 
-UVSControl::~UVSControl()
+HILControl::~HILControl()
 { // shutdown ROS subscribers properly
 	error_sub.shutdown();
 	eef_sub.shutdown();
 	teleop_sub.shutdown();
 }
 
-Eigen::VectorXd UVSControl::calculate_delta_q()
+Eigen::VectorXd HILControl::calculate_delta_q()
 { // calculates the actual motion change in joint space to use in Broyden's update
 	Eigen::VectorXd total_dq;
 	Eigen::VectorXd dq(dof);
@@ -79,7 +79,7 @@ Eigen::VectorXd UVSControl::calculate_delta_q()
 	return dq;
 }
 
-Eigen::VectorXd UVSControl::calculate_target(const Eigen::VectorXd &current_state, const Eigen::VectorXd &delta)
+Eigen::VectorXd HILControl::calculate_target(const Eigen::VectorXd &current_state, const Eigen::VectorXd &delta)
 { // calculates target vector in joint space to move to with given delta added to active joints
 	Eigen::VectorXd target_state(total_joints);
 	int j = 0;
@@ -98,7 +98,7 @@ Eigen::VectorXd UVSControl::calculate_target(const Eigen::VectorXd &current_stat
 	return target_state;
 }
 
-Eigen::VectorXd UVSControl::calculate_step(const Eigen::VectorXd &current_error_value)
+Eigen::VectorXd HILControl::calculate_step(const Eigen::VectorXd &current_error_value)
 { // calculates new motion step to take with the control law: step = −λJ+e
 	// std::ofstream myfile;
 	// myfile.open("predicted_pose.txt", std::ios_base::app);
@@ -118,7 +118,7 @@ Eigen::VectorXd UVSControl::calculate_step(const Eigen::VectorXd &current_error_
 	return step;
 }
 
-bool UVSControl::convergence_check(const Eigen::VectorXd &current_error)
+bool HILControl::convergence_check(const Eigen::VectorXd &current_error)
 { // should we make lambda larger as we get closer to the target? Test
 	double pixel_step_size = 30.0;
 	double n = current_error.norm();
@@ -152,7 +152,7 @@ bool UVSControl::convergence_check(const Eigen::VectorXd &current_error)
 	return false;
 }
 
-bool UVSControl::broyden_update(double alpha)
+bool HILControl::broyden_update(double alpha)
 { // update jacobian
 	Eigen::MatrixXd update(jacobian.rows(), jacobian.cols());
 	Eigen::VectorXd current_eef_position;
@@ -168,7 +168,7 @@ bool UVSControl::broyden_update(double alpha)
 	}
 	current_eef_position = get_eef_position();
 	dy = current_eef_position - previous_eef_position;
-	update = ((((-dy) - jacobian * dq)) * dq.transpose()) / (dq_norm * dq_norm);
+	update = ((dy - jacobian * dq) * dq.transpose()) / (dq_norm * dq_norm);
 	previous_jacobian = jacobian;
 	jacobian = jacobian + (alpha * update);
 
@@ -188,7 +188,7 @@ bool UVSControl::broyden_update(double alpha)
 	return true;
 }
 
-int UVSControl::move_step(bool continous_motion)
+int HILControl::move_step(bool continous_motion)
 { // step through one loop of VS
 	Eigen::VectorXd current_error;
 	Eigen::VectorXd current_joint_positions;
@@ -243,7 +243,7 @@ int UVSControl::move_step(bool continous_motion)
 	return 2;
 }
 
-int UVSControl::teleop_move_step(bool continous_motion)
+int HILControl::teleop_move_step(bool continous_motion)
 { // step through one loop of VS
 	Eigen::VectorXd current_error;
 	Eigen::VectorXd current_joint_positions;
@@ -306,7 +306,7 @@ int UVSControl::teleop_move_step(bool continous_motion)
 	return 2;
 }
 
-void UVSControl::teleop_grasp()
+void HILControl::teleop_grasp()
 {
 	teleop_move = false;
 	int c;
@@ -317,7 +317,7 @@ void UVSControl::teleop_grasp()
 		ros::Rate(30).sleep();
 		if (teleop_move)
 		{
-			// std::cout << "received teleop grasp command" << std::endl;
+			std::cout << "received teleop grasp command" << std::endl;
 			teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
 			// ros::Time begin = ros::Time::now();
@@ -338,84 +338,73 @@ void UVSControl::teleop_grasp()
 	}
 }
 
-int UVSControl::teleop_grasp_step()
+int HILControl::teleop_grasp_step()
 {
 	Eigen::VectorXd joints;
-	double delta_yaw = M_PI / 40;	 // 45 degrees per second at 30Hz
+	double delta_yaw = M_PI / 40;	  // 45 degrees per second at 30Hz
 	double delta_radians = M_PI / 240; // 5.4 degrees per second at 30Hz
-	std::cout << teleop_direction << std::endl;
-	if (teleop_direction[0] == -9.0)
+	Eigen::VectorXd control_vec(4);
+	// std::cout << teleop_direction << std::endl;
+	if (controller_buttons[8])
 	{
 		std::cout << "User quit teleop. Exiting.." << std::endl;
 		return 0;
 	}
-	else if (teleop_direction[1] == -5.0)
+	if (controller_buttons[3])
 	{
-		std::cout << "Mode switch" << std::endl;
-		mode = (mode + 1) % 3;
-		switch (mode)
-		{
-		case 0:
-			std::cout << "Lat/Long" << std::endl;
-			return 2;
-		case 1:
-			std::cout << "Distance/Rotation" << std::endl;
-			return 2;
-		case 2:
-			std::cout << "Cartesian" << std::endl;
-			return 2;
-		}
-	}
-	else if (teleop_direction[1] == 5.0)
-	{
-		is_spread = !is_spread;
-		if (is_spread)
+		if (!is_spread)
 		{
 			std::cout << "Opening spread" << std::endl;
 			bhand->open_spread();
+			is_spread = true;
 			return 2;
 		}
-		std::cout << "Closing spread" << std::endl;
-		bhand->close_spread();
-		return 2;
 	}
-	else if (teleop_direction[0] == -5.0)
+	if (controller_buttons[0])
 	{
-		bhand->open_grasp();
-		std::cout << "Opening" << std::endl;
-		return 2;
+		if (is_spread)
+		{
+			std::cout << "Closing spread" << std::endl;
+			bhand->close_spread();
+			is_spread = false;
+			return 2;
+		}
 	}
-	else if (teleop_direction[0] == 5.0)
+	if (controller_buttons[2])
 	{
-		bhand->close_grasp();
-		std::cout << "Grasping" << std::endl;
-		return 2;
+		if (grip_closed)
+		{
+			bhand->open_grasp();
+			std::cout << "Opening" << std::endl;
+			grip_closed = false;
+			return 2;
+		}
 	}
-	Eigen::VectorXd control_vec(4);
-	control_vec << 0, 0, 0, 0;
-	switch (mode)
+	if (controller_buttons[1])
 	{
-	case 0:
-		control_vec[1] = delta_radians * teleop_direction[1];
-		control_vec[2] = delta_radians * teleop_direction[0];
-		break;
-	case 1:
-		control_vec[0] = 0.01 * teleop_direction[1]; // 10 cm/s at 30Hz
-		control_vec[3] = delta_yaw * teleop_direction[0];
-		break;
-	case 2:
-		object_position[0] += 0.00333 * teleop_direction[1];
-		object_position[1] -= 0.00167 * teleop_direction[0]; // 5 cm/s due to weak wrist joint
-		break;
+		if (!grip_closed)
+		{
+			bhand->close_grasp();
+			std::cout << "Grasping" << std::endl;
+			grip_closed = true;
+			return 2;
+		}
 	}
-	if (UVSControl::sphere_move(control_vec))
+	object_position[0] += 0.00333 * controller_axes[1];
+	object_position[1] += 0.00167 * controller_axes[0]; // 5 cm/s due to weak wrist joint
+	control_vec[0] = (controller_buttons[6] - controller_buttons[7]);
+	control_vec[1] = controller_axes[3];
+	control_vec[2] = -controller_axes[2];
+	control_vec[3] = controller_buttons[5] - controller_buttons[4];
+	
+	if (HILControl::sphere_move(control_vec))
 	{
 		return 2;
 	}
 	return 0;
 }
 
-bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
+bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 {
 	const robot_state::JointModelGroup *joint_model_group = kinematic_model->getJointModelGroup("arm");
 	const std::vector<std::string> &joint_names = joint_model_group->getVariableNames();
@@ -424,7 +413,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	Eigen::Vector3d rpy;
 	Eigen::VectorXd full_pose(7);
 	// double delta_radians = 0.017453292519; // one degree
-	double delta_radians = M_PI / 20; // 45 degrees per second at 30Hz
+	double delta_radians = M_PI / 240; // 45 degrees per second at 30Hz
 	Eigen::Vector3d cart_pos;
 	Eigen::Matrix3d rotator;
 	Eigen::Vector3d axis;
@@ -442,8 +431,8 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	}
 	// std::cout << "Cartesian position: \n**************\n"
 	// 		  << cart_pos << "\n***********" << std::endl;
-	spherical_position[0] += control_vec[0];
-	yaw_offset += control_vec[3];
+	spherical_position[0] += 0.003 * control_vec[0];
+	yaw_offset -= delta_radians * control_vec[3];
 	std::cout << "Spherical position: \n**************\n"
 			  << spherical_position << "\n***********" << std::endl;
 	cart_pos = spherical_to_cartesian(spherical_position);
@@ -485,7 +474,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
 			goal_joint_positions[i] = joints[i];
 		}
-		arm->call_move_joints(goal_joint_positions, true);
+		arm->call_move_joints(goal_joint_positions, false);
 	}
 	else
 	{
@@ -495,7 +484,7 @@ bool UVSControl::sphere_move(const Eigen::VectorXd &control_vec)
 	return true;
 }
 
-void UVSControl::converge(double alpha, int max_iterations, bool continous_motion)
+void HILControl::converge(double alpha, int max_iterations, bool continous_motion)
 {
 	int c;
 	std::cout << "\n**************************************" << std::endl;
@@ -525,7 +514,7 @@ void UVSControl::converge(double alpha, int max_iterations, bool continous_motio
 	}
 }
 
-void UVSControl::teleop_converge(double alpha, int max_iterations, bool continous_motion)
+void HILControl::teleop_converge(double alpha, int max_iterations, bool continous_motion)
 {
 	teleop_move = false;
 	int c;
@@ -562,7 +551,7 @@ void UVSControl::teleop_converge(double alpha, int max_iterations, bool continou
 	}
 }
 
-void UVSControl::set_active_joints()
+void HILControl::set_active_joints()
 { // set which joints to use according to users input
 	for (int i = 0; i < dof; ++i)
 	{
@@ -581,7 +570,7 @@ void UVSControl::set_active_joints()
 	}
 }
 
-bool UVSControl::jacobian_estimate(double perturbation_delta)
+bool HILControl::jacobian_estimate(double perturbation_delta)
 { // perturb each active joint for the initial jacobian estimation
 	Eigen::VectorXd e1;
 	Eigen::VectorXd e2;
@@ -604,7 +593,7 @@ bool UVSControl::jacobian_estimate(double perturbation_delta)
 			e2 = get_eef_position();
 			ros::Duration(0.2).sleep();
 			arm->call_move_joints(position, true);
-			jacobian.col(j) = (e1 - e2) / perturbation_delta;
+			jacobian.col(j) = (e2 - e1) / perturbation_delta;
 			j++;
 		}
 	}
@@ -621,7 +610,7 @@ bool UVSControl::jacobian_estimate(double perturbation_delta)
 	return true;
 }
 
-Eigen::MatrixXd UVSControl::control_plane_vectors(Eigen::VectorXd &delta_q)
+Eigen::MatrixXd HILControl::control_plane_vectors(Eigen::VectorXd &delta_q)
 {
 	/*
 		Returns a dof x 2 matrix, with columns that define the VS control plane.
@@ -663,7 +652,7 @@ Eigen::MatrixXd UVSControl::control_plane_vectors(Eigen::VectorXd &delta_q)
 	return 5.0 * control_vectors;
 }
 
-Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd &delta, const Eigen::VectorXd &current_velocities)
+Eigen::VectorXd HILControl::calculate_rampdown_and_endtime(const Eigen::VectorXd &delta, const Eigen::VectorXd &current_velocities)
 { // Code from libbarrett copied here and refactored to determine rampDown time and end time
 	// First element of vector is start of plateau (negative is no plateau), second element is ramp down time, last element is predicted end time.
 	// cstephens ??/07/2018
@@ -747,7 +736,7 @@ Eigen::VectorXd UVSControl::calculate_rampdown_and_endtime(const Eigen::VectorXd
 	return times;
 }
 
-void UVSControl::loop()
+void HILControl::loop()
 { // main loop for user interaction
 	bool jacobian_initialized = false;
 	bool exit_loop = false;
@@ -844,7 +833,8 @@ void UVSControl::loop()
 			arm->move_to_initial_position();
 			bhand->open_grasp();
 			bhand->close_spread();
-			ready_to_grasp = false;
+			grip_closed = false;
+			is_spread = false;
 			break;
 		case 'd':
 			perturbation_delta = degreesToRadians(double_input(1, 20));
@@ -969,7 +959,7 @@ void UVSControl::loop()
 	}
 }
 
-void UVSControl::initialize()
+void HILControl::initialize()
 {
 	if (dof == 7)
 	{
@@ -995,11 +985,11 @@ void UVSControl::initialize()
 
 int main(int argc, char *argv[])
 {
-	ros::init(argc, argv, "UVSControl");
+	ros::init(argc, argv, "HILControl");
 	ros::NodeHandle nh_("~");
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
-	UVSControl VS(nh_);
+	HILControl VS(nh_);
 	// VS.initialize();
 	VS.loop();
 	return 0;
