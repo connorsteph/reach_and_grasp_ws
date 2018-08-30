@@ -64,7 +64,7 @@ class HILControl
 	std::vector<bool> active_buttons_map = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0};
 	std::vector<bool> active_axes_map = {1, 1, 1, 1, 0, 0};
 	Eigen::Vector2d teleop_direction;
-	Eigen::Vector3d temp_object_position;
+	Eigen::Vector3d temp_object_position{0.5, 0.0, 0.0};
 	Eigen::Vector3d object_position{0.5, 0.0, 0.0};
 	Eigen::Vector3d spherical_position{0.3, 0.0, 0.0}; // r, theta, phi
 	Eigen::VectorXd previous_eef_position;
