@@ -406,6 +406,7 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 	const robot_state::JointModelGroup *joint_model_group = kinematic_model->getJointModelGroup("arm");
 	const std::vector<std::string> &joint_names = joint_model_group->getVariableNames();
 	Eigen::Quaterniond quaternion;
+	geometry_msgs::Pose pose_msg;
 	Eigen::VectorXd ortn(4);
 	Eigen::Vector3d rpy;
 	Eigen::VectorXd full_pose(7);
@@ -414,6 +415,7 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 	Eigen::Vector3d cart_pos;
 	Eigen::Matrix3d rotator;
 	Eigen::Vector3d axis;
+	Eigen::VectorXd current_joint_angles = arm->get_positions();
 	Eigen::VectorXd gains(6);
 	std::vector<double> joints;
 	Eigen::VectorXd goal_joint_positions(7);
@@ -426,23 +428,31 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 		cart_pos = rotator * cart_pos;
 		spherical_position = cartesian_to_spherical(cart_pos);
 	}
-	// std::cout << "Cartesian position: \n**************\n"
-	// 		  << cart_pos << "\n***********" << std::endl;
+	pose_msg = get_pose(object_position, getToolPosition(current_joint_angles, total_joints));
+	bool found_ik = kinematic_state->setFromIK(joint_model_group, pose_msg, "wam/wrist_palm_stump_link", 5, 0.1);
+	if (found_ik)
+	{
+		kinematic_state->copyJointGroupPositions(joint_model_group, joints);
+		for (std::size_t i = 0; i < joint_names.size(); ++i)
+		{
+			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
+			goal_joint_positions[i] = joints[i];
+		}
+		yaw_offset = current_joint_angles[6] - goal_joint_positions[6];
+	}
+	else
+	{
+		yaw_offset = 0.0;
+	}
+
 	spherical_position[0] += 0.003 * control_vec[0];
-	yaw_offset -= delta_radians * control_vec[3];
+	yaw_offset -= 6.0 * delta_radians * control_vec[3];
 	std::cout << "Spherical position: \n**************\n"
 			  << spherical_position << "\n***********" << std::endl;
 	cart_pos = spherical_to_cartesian(spherical_position);
 	cart_pos = cart_pos + object_position;
 
 	quaternion = (inwards_normal_to_quaternion(spherical_position));
-	ortn[0] = quaternion.x();
-	ortn[1] = quaternion.y();
-	ortn[2] = quaternion.z();
-	ortn[3] = quaternion.w();
-	rpy = toEulerAngle(ortn);
-	rpy[2] += yaw_offset; // modify orientation yaw by user incremental offset
-	quaternion = toQuaternion(rpy);
 	ortn[0] = quaternion.x();
 	ortn[1] = quaternion.y();
 	ortn[2] = quaternion.z();
@@ -454,7 +464,6 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 	full_pose[4] = ortn[1];
 	full_pose[5] = ortn[2];
 	full_pose[6] = ortn[3];
-	geometry_msgs::Pose pose_msg;
 	pose_msg.position.x = cart_pos[0];
 	pose_msg.position.y = cart_pos[1];
 	pose_msg.position.z = cart_pos[2];
@@ -462,7 +471,7 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 	pose_msg.orientation.y = ortn[1];
 	pose_msg.orientation.z = ortn[2];
 	pose_msg.orientation.w = ortn[3];
-	bool found_ik = kinematic_state->setFromIK(joint_model_group, pose_msg, "wam/wrist_palm_stump_link", 5, 0.1);
+	found_ik = kinematic_state->setFromIK(joint_model_group, pose_msg, "wam/wrist_palm_stump_link", 5, 0.1);
 	if (found_ik)
 	{
 		kinematic_state->copyJointGroupPositions(joint_model_group, joints);
@@ -471,6 +480,8 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
 			goal_joint_positions[i] = joints[i];
 		}
+
+		goal_joint_positions[6] += yaw_offset;
 		arm->call_move_joints(goal_joint_positions, false);
 	}
 	else
@@ -887,7 +898,7 @@ void HILControl::loop()
 		{
 			object_position = temp_object_position;
 			spherical_position = cartesian_to_spherical(getToolPosition(arm->get_positions(), total_joints) - object_position);
-			spherical_position[0] += 0.02;
+			spherical_position[0] += 0.05;
 			teleop_grasp();
 			lambda = default_lambda;
 			break;

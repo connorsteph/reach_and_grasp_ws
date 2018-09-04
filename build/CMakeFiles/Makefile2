@@ -388,21 +388,21 @@ mtf_bridge/preinstall:
 
 # All Build rule for target.
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_lisp.dir/all
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/build.make mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/build.make mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles 
@@ -438,21 +438,21 @@ clean: mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/clean
 
 # All Build rule for target.
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_lisp.dir/all
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/SharedImageReader.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/SharedImageReader.dir/build.make mtf_bridge/CMakeFiles/SharedImageReader.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/SharedImageReader.dir/build.make mtf_bridge/CMakeFiles/SharedImageReader.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  1
@@ -739,8 +739,8 @@ clean: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/interface_tracker_node.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/interface_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/interface_tracker_node.dir/all: mtf_bridge/CMakeFiles/SharedImageReader.dir/all
+mtf_bridge/CMakeFiles/interface_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/interface_tracker_node.dir/all: mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/interface_tracker_node.dir/build.make mtf_bridge/CMakeFiles/interface_tracker_node.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/interface_tracker_node.dir/build.make mtf_bridge/CMakeFiles/interface_tracker_node.dir/build
@@ -844,11 +844,11 @@ clean: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
 mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_BufferInit.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  25 26 27
@@ -879,11 +879,11 @@ clean: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
 mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_BufferInit.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
 mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  28 29 30
@@ -914,11 +914,11 @@ clean: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_lisp.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
-mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
 mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_BufferInit.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Point.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_PatchTrackers.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
+mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/_mtf_bridge_generate_messages_check_deps_Patch.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/build.make mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_py.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  31 32 33
@@ -1197,8 +1197,8 @@ clean: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/sample_tracker_node.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/sample_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/sample_tracker_node.dir/all: mtf_bridge/CMakeFiles/SharedImageReader.dir/all
+mtf_bridge/CMakeFiles/sample_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/sample_tracker_node.dir/build.make mtf_bridge/CMakeFiles/sample_tracker_node.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/sample_tracker_node.dir/build.make mtf_bridge/CMakeFiles/sample_tracker_node.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  34
@@ -1419,8 +1419,8 @@ clean: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 # Target rules for target mtf_bridge/CMakeFiles/vs_tracker_node.dir
 
 # All Build rule for target.
-mtf_bridge/CMakeFiles/vs_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/vs_tracker_node.dir/all: mtf_bridge/CMakeFiles/SharedImageReader.dir/all
+mtf_bridge/CMakeFiles/vs_tracker_node.dir/all: mtf_bridge/CMakeFiles/mtf_bridge_generate_messages_cpp.dir/all
 mtf_bridge/CMakeFiles/vs_tracker_node.dir/all: mtf_bridge/CMakeFiles/InterfaceTopicHandler.dir/all
 	$(MAKE) -f mtf_bridge/CMakeFiles/vs_tracker_node.dir/build.make mtf_bridge/CMakeFiles/vs_tracker_node.dir/depend
 	$(MAKE) -f mtf_bridge/CMakeFiles/vs_tracker_node.dir/build.make mtf_bridge/CMakeFiles/vs_tracker_node.dir/build
@@ -2463,17 +2463,17 @@ clean: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Teach.di
 
 # All Build rule for target.
 wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_py.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
+wam_control/CMakeFiles/arm_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/arm_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/all
@@ -2513,17 +2513,17 @@ clean: wam_control/CMakeFiles/arm_control.dir/clean
 
 # All Build rule for target.
 wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_py.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/std_msgs_generate_messages_py.dir/all
+wam_control/CMakeFiles/bhand_control.dir/all: mtf_bridge/CMakeFiles/roscpp_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/all
 wam_control/CMakeFiles/bhand_control.dir/all: wam_control/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/all
@@ -2791,22 +2791,22 @@ clean: wam_control/CMakeFiles/wam_control_generate_messages.dir/clean
 
 # All Build rule for target.
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_GetToolPose.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMoveBlock.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_MatrixMN.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_PoseMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTJointPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandSpreadPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTOrtnVel.dir/all
@@ -2852,22 +2852,22 @@ clean: wam_control/CMakeFiles/wam_control_generate_messages_cpp.dir/clean
 
 # All Build rule for target.
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_GetToolPose.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMoveBlock.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_MatrixMN.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_PoseMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTJointPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandSpreadPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTOrtnVel.dir/all
@@ -2913,22 +2913,22 @@ clean: wam_control/CMakeFiles/wam_control_generate_messages_lisp.dir/clean
 
 # All Build rule for target.
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: mtf_bridge/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_GetToolPose.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMoveBlock.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Hold.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_MatrixMN.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_PoseMove.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTJointPos.dir/all
-wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartPosMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandGraspPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTCartVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_Play.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerVel.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_OrtnSplitMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_JointMove.dir/all
+wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_CartVel.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandSpreadPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_BHandFingerPos.dir/all
 wam_control/CMakeFiles/wam_control_generate_messages_py.dir/all: wam_control/CMakeFiles/_wam_control_generate_messages_check_deps_RTOrtnVel.dir/all
@@ -3055,6 +3055,7 @@ hil_servoing/all: hil_servoing/CMakeFiles/hil_servoing.dir/all
 hil_servoing/all: hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/all
 hil_servoing/all: hil_servoing/CMakeFiles/hil_teleop.dir/all
 hil_servoing/all: hil_servoing/CMakeFiles/kinematics.dir/all
+hil_servoing/all: hil_servoing/CMakeFiles/state_display_tutorial.dir/all
 .PHONY : hil_servoing/all
 
 # Convenience name for "clean" pass in the directory.
@@ -3093,6 +3094,7 @@ hil_servoing/clean: hil_servoing/CMakeFiles/octomap_msgs_generate_messages_py.di
 hil_servoing/clean: hil_servoing/CMakeFiles/shape_msgs_generate_messages_cpp.dir/clean
 hil_servoing/clean: hil_servoing/CMakeFiles/shape_msgs_generate_messages_lisp.dir/clean
 hil_servoing/clean: hil_servoing/CMakeFiles/shape_msgs_generate_messages_py.dir/clean
+hil_servoing/clean: hil_servoing/CMakeFiles/state_display_tutorial.dir/clean
 hil_servoing/clean: hil_servoing/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/clean
 hil_servoing/clean: hil_servoing/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/clean
 hil_servoing/clean: hil_servoing/CMakeFiles/trajectory_msgs_generate_messages_py.dir/clean
@@ -3458,7 +3460,7 @@ hil_servoing/CMakeFiles/hil_servoing.dir/all: wam_control/CMakeFiles/arm_control
 hil_servoing/CMakeFiles/hil_servoing.dir/all: wam_control/CMakeFiles/bhand_control.dir/all
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing.dir/build.make hil_servoing/CMakeFiles/hil_servoing.dir/depend
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing.dir/build.make hil_servoing/CMakeFiles/hil_servoing.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles 
 	@echo "Built target hil_servoing"
 .PHONY : hil_servoing/CMakeFiles/hil_servoing.dir/all
 
@@ -3468,7 +3470,7 @@ all: hil_servoing/CMakeFiles/hil_servoing.dir/all
 
 # Build rule for subdir invocation for target.
 hil_servoing/CMakeFiles/hil_servoing.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/hil_servoing.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
 .PHONY : hil_servoing/CMakeFiles/hil_servoing.dir/rule
@@ -3499,7 +3501,7 @@ hil_servoing/CMakeFiles/hil_servoing_gencpp.dir/all: hil_servoing/CMakeFiles/hil
 
 # Build rule for subdir invocation for target.
 hil_servoing/CMakeFiles/hil_servoing_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/hil_servoing_gencpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
 .PHONY : hil_servoing/CMakeFiles/hil_servoing_gencpp.dir/rule
@@ -3536,7 +3538,7 @@ all: hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/all
 
 # Build rule for subdir invocation for target.
 hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 15
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
 .PHONY : hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/rule
@@ -3558,22 +3560,22 @@ clean: hil_servoing/CMakeFiles/hil_servoing_generate_messages.dir/clean
 # Target rules for target hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir
 
 # All Build rule for target.
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Error.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_ErrorInfo.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackedPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Teleop.dir/all
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/depend
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  8 9 10 11
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles  7 8 9 10 11
 	@echo "Built target hil_servoing_generate_messages_cpp"
 .PHONY : hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
 .PHONY : hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/rule
@@ -3595,12 +3597,12 @@ clean: hil_servoing/CMakeFiles/hil_servoing_generate_messages_cpp.dir/clean
 # Target rules for target hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir
 
 # All Build rule for target.
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Error.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_ErrorInfo.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackedPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Teleop.dir/all
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/depend
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/build
@@ -3632,12 +3634,12 @@ clean: hil_servoing/CMakeFiles/hil_servoing_generate_messages_lisp.dir/clean
 # Target rules for target hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir
 
 # All Build rule for target.
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Error.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
-hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_ErrorInfo.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackedPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_EndEffectorPoints.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TaskIds.dir/all
+hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_TrackPoint.dir/all
 hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/all: hil_servoing/CMakeFiles/_hil_servoing_generate_messages_check_deps_Teleop.dir/all
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/depend
 	$(MAKE) -f hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/build.make hil_servoing/CMakeFiles/hil_servoing_generate_messages_py.dir/build
@@ -4230,6 +4232,41 @@ hil_servoing/CMakeFiles/shape_msgs_generate_messages_py.dir/clean:
 
 # clean rule for target.
 clean: hil_servoing/CMakeFiles/shape_msgs_generate_messages_py.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target hil_servoing/CMakeFiles/state_display_tutorial.dir
+
+# All Build rule for target.
+hil_servoing/CMakeFiles/state_display_tutorial.dir/all:
+	$(MAKE) -f hil_servoing/CMakeFiles/state_display_tutorial.dir/build.make hil_servoing/CMakeFiles/state_display_tutorial.dir/depend
+	$(MAKE) -f hil_servoing/CMakeFiles/state_display_tutorial.dir/build.make hil_servoing/CMakeFiles/state_display_tutorial.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/froglake/reach_and_grasp_ws/build/CMakeFiles 
+	@echo "Built target state_display_tutorial"
+.PHONY : hil_servoing/CMakeFiles/state_display_tutorial.dir/all
+
+# Include target in all.
+all: hil_servoing/CMakeFiles/state_display_tutorial.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+hil_servoing/CMakeFiles/state_display_tutorial.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 hil_servoing/CMakeFiles/state_display_tutorial.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/froglake/reach_and_grasp_ws/build/CMakeFiles 0
+.PHONY : hil_servoing/CMakeFiles/state_display_tutorial.dir/rule
+
+# Convenience name for target.
+state_display_tutorial: hil_servoing/CMakeFiles/state_display_tutorial.dir/rule
+.PHONY : state_display_tutorial
+
+# clean rule for target.
+hil_servoing/CMakeFiles/state_display_tutorial.dir/clean:
+	$(MAKE) -f hil_servoing/CMakeFiles/state_display_tutorial.dir/build.make hil_servoing/CMakeFiles/state_display_tutorial.dir/clean
+.PHONY : hil_servoing/CMakeFiles/state_display_tutorial.dir/clean
+
+# clean rule for target.
+clean: hil_servoing/CMakeFiles/state_display_tutorial.dir/clean
 .PHONY : clean
 
 #=============================================================================
