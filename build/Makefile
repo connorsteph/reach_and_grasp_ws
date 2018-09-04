@@ -1700,6 +1700,19 @@ shape_msgs_generate_messages_py/fast:
 .PHONY : shape_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named state_display_tutorial
+
+# Build rule for target.
+state_display_tutorial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 state_display_tutorial
+.PHONY : state_display_tutorial
+
+# fast build rule for target.
+state_display_tutorial/fast:
+	$(MAKE) -f hil_servoing/CMakeFiles/state_display_tutorial.dir/build.make hil_servoing/CMakeFiles/state_display_tutorial.dir/build
+.PHONY : state_display_tutorial/fast
+
+#=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -1900,6 +1913,7 @@ help:
 	@echo "... error_calculation"
 	@echo "... visualization_msgs_generate_messages_lisp"
 	@echo "... trajectory_msgs_generate_messages_lisp"
+	@echo "... state_display_tutorial"
 	@echo "... hil_servoing_gencpp"
 	@echo "... kinematics"
 	@echo "... octomap_msgs_generate_messages_py"

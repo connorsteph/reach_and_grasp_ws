@@ -190,6 +190,7 @@ hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/ros/wall_timer_options.h
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/rosconsole/macros_generated.h
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/sensor_msgs/JointState.h
+hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/sensor_msgs/Joy.h
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/sensor_msgs/MultiDOFJointState.h
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/shape_msgs/Mesh.h
 hil_servoing/CMakeFiles/hil_servoing.dir/src/hil_control.cpp.o: /opt/ros/indigo/include/shape_msgs/MeshTriangle.h

@@ -73,3 +73,9 @@ target_link_libraries(kinematics
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
 )
+
+add_executable(state_display_tutorial src/state_display_tutorial.cpp)
+target_link_libraries(state_display_tutorial
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+)

@@ -9,5 +9,13 @@
         respawn="false" output="screen">
     <rosparam command="load"
               file="$(find barrett_wam_moveit_config)/config/kinematics.yaml"/>
+    </node>
+    <!-- joy node -->
+    <node respawn="true" pkg="joy"
+        type="joy_node" name="joy_node" >
+    <param name="deadzone" value="0.12" />
+    <param name="autorepeat_rate" value="30.0"/>
+
   </node>
+
 </launch>
