@@ -22,10 +22,6 @@
     <node pkg="visual_servoing_gui" type="visual_servoing_gui" name="visual_servoing_gui" output="screen"/> 
     <node pkg="hil_servoing" type="error_calculation" name="error_calculation" output="screen"/> 
 <!--
-<<<<<<< HEAD
-    <node pkg="hil_servoing" type="uvs" name="uvs" output="screen"/>
-=======
     <node pkg="uncalibrated_visual_servoing" type="HIL" name="HIL" output="screen"/>
->>>>>>> joystick_teleop
 -->
 </launch>
