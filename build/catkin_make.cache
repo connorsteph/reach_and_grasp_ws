@@ -1,2 +1,0 @@
-barrett_model:barrett_moveit/barrett_wam_moveit_config:hil_servoing:mtf_bridge:visual_servoing_gui:wam_control
--DCATKIN_DEVEL_PREFIX=/home/froglake/reach_and_grasp_ws/devel -DCMAKE_INSTALL_PREFIX=/home/froglake/reach_and_grasp_ws/install -G Unix Makefiles

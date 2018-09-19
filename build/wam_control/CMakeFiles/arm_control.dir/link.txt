@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -std=c++11   -shared -Wl,-soname,libarm_control.so -o /home/froglake/reach_and_grasp_ws/devel/lib/libarm_control.so CMakeFiles/arm_control.dir/src/arm_control.cpp.o 

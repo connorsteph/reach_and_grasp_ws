@@ -1,2 +1,0 @@
-set(hil_servoing_MESSAGE_FILES "/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/TaskIds.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/TrackPoint.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/TrackedPoints.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/EndEffectorPoints.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/Error.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/ErrorInfo.msg;/home/froglake/reach_and_grasp_ws/src/hil_servoing/msg/Teleop.msg")
-set(hil_servoing_SERVICE_FILES "")

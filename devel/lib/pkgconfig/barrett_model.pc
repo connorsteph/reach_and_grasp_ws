@@ -1,8 +1,0 @@
-prefix=/home/froglake/reach_and_grasp_ws/devel
-
-Name: barrett_model
-Description: Description of barrett_model
-Version: 0.5.1
-Cflags: 
-Libs: -L/home/froglake/reach_and_grasp_ws/devel/lib 
-Requires: 
