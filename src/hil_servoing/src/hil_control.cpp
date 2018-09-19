@@ -315,19 +315,21 @@ void HILControl::teleop_grasp()
 		if (teleop_move)
 		{
 			std::cout << "received teleop grasp command" << std::endl;
-			teleop_move = false;
+			// teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
 			// ros::Time begin = ros::Time::now();
 			c = teleop_grasp_step();
 			switch (c)
 			{
 			case 0: // convergence - return early
+			teleop_move = false;
 				return;
 			// case 1: // joints out of limit, reset jacobian
 			// 	jacobian = previous_jacobian;
 			// 	log(filename, "target not within joint limits, resetting jacobian to: ", jacobian, false);
 			// 	break;
 			case 2: // step completed successfully
+				teleop_move = false;
 				break;
 			}
 			// std::cout << "loop duration: " << ros::Time::now() - begin << "\n**************************************" << std::endl;
@@ -387,8 +389,8 @@ int HILControl::teleop_grasp_step()
 			return 2;
 		}
 	}
-	object_position[0] += 0.00333 * controller_axes[1];
-	object_position[1] += 0.00167 * controller_axes[0]; // 5 cm/s due to weak wrist joint
+	object_position[0] += 0.05 * controller_axes[1];
+	object_position[1] += 0.05 * controller_axes[0]; // 5 cm/s due to weak wrist joint
 	control_vec[0] = (controller_buttons[6] - controller_buttons[7]);
 	control_vec[1] = controller_axes[3];
 	control_vec[2] = -controller_axes[2];
@@ -411,7 +413,7 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 	Eigen::Vector3d rpy;
 	Eigen::VectorXd full_pose(7);
 	// double delta_radians = 0.017453292519; // one degree
-	double delta_radians = M_PI / 240; // 45 degrees per second at 30Hz
+	double delta_radians = M_PI / 15; // 45 degrees per second at 30Hz
 	Eigen::Vector3d cart_pos;
 	Eigen::Matrix3d rotator;
 	Eigen::Vector3d axis;
@@ -438,15 +440,15 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 			// ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joints[i]);
 			goal_joint_positions[i] = joints[i];
 		}
-		yaw_offset = current_joint_angles[6] - goal_joint_positions[6];
+		yaw_offset = (current_joint_angles[6] - goal_joint_positions[6]);
 	}
 	else
 	{
 		yaw_offset = 0.0;
 	}
 
-	spherical_position[0] += 0.003 * control_vec[0];
-	yaw_offset -= 6.0 * delta_radians * control_vec[3];
+	spherical_position[0] += 0.05 * control_vec[0];
+	yaw_offset -= 2.0 * delta_radians * control_vec[3];
 	std::cout << "Spherical position: \n**************\n"
 			  << spherical_position << "\n***********" << std::endl;
 	cart_pos = spherical_to_cartesian(spherical_position);
@@ -482,7 +484,7 @@ bool HILControl::sphere_move(const Eigen::VectorXd &control_vec)
 		}
 
 		goal_joint_positions[6] += yaw_offset;
-		arm->call_move_joints(goal_joint_positions, false);
+		arm->call_move_joints(goal_joint_positions, true);
 	}
 	else
 	{
