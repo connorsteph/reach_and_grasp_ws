@@ -80,6 +80,7 @@ class HILControl
 	Eigen::VectorXd calculate_target(const Eigen::VectorXd &pos, const Eigen::VectorXd &delta);
 	Eigen::VectorXd calculate_step(const Eigen::VectorXd &current_error_value);
 	Eigen::VectorXd calculate_rampdown_and_endtime(const Eigen::VectorXd &delta, const Eigen::VectorXd &current_velocities);
+	Eigen::Matrix<double, 7, 1> goal_joint_angles;
 	bool convergence_check(const Eigen::VectorXd &current_error);
 	Eigen::MatrixXd control_plane_vectors(Eigen::VectorXd &delta_q);
 	void converge(double alpha, int max_iterations, bool continous_motion);

@@ -157,12 +157,8 @@ void updateTrackers() {
 			(*tracker).update(*(topic_handler->getFrame()), topic_handler->getFrameID());
 			std::string patch = getPatch(*tracker);
 			std::string center = getCenter(*tracker);
-<<<<<<< HEAD
 			hil_servoing::TrackPoint p = getCenterPoint(*tracker);
 			// std::cout << center << std::endl;
-=======
-			uncalibrated_visual_servoing::TrackPoint p = getCenterPoint(*tracker);
->>>>>>> joystick_teleop
 			patch_msg += patch;
 			center_msg.points.push_back(p);
 		}

@@ -3,7 +3,7 @@
  */
 #include <fstream>
 #include "hil_servoing/hil_control.h"
-
+using namespace std;
 HILControl::HILControl(ros::NodeHandle nh_)
 {
 	dof = 0;
@@ -114,7 +114,7 @@ Eigen::VectorXd HILControl::calculate_step(const Eigen::VectorXd &current_error_
 	temp_object_position[2] = pred_pose[2];
 	// myfile << pred_pose[0] << ", " << pred_pose[1] << ", " << pred_pose[2] << std::endl;
 	// myfile.close();
-	step *= lambda;
+	step *= 0.1;
 	return step;
 }
 
@@ -159,12 +159,24 @@ bool HILControl::broyden_update(double alpha)
 
 	dq = calculate_delta_q();
 	dq_norm = dq.norm();
-	if (dq_norm == 0)
+	if (dq_norm < 1e-3)
 	{
-		return false;
+		cout << "Small dq - no update" << endl;
+		cout << dq << endl;
+		return true;
 	}
 	current_eef_position = get_eef_position();
 	dy = current_eef_position - previous_eef_position;
+	if (dy.norm() < 5)
+	{
+		cout << "Small dy - no update" << endl;
+		cout << dy << endl;
+		return true;
+	}
+	cout << "dy\n"
+		 << dy << endl;
+	cout << "dq\n"
+		 << dq << endl;
 	update = ((dy - jacobian * dq) * dq.transpose()) / (dq_norm * dq_norm);
 	previous_jacobian = jacobian;
 	jacobian = jacobian + (alpha * update);
@@ -244,16 +256,29 @@ int HILControl::teleop_move_step(bool continous_motion)
 { // step through one loop of VS
 	Eigen::VectorXd current_error;
 	Eigen::VectorXd current_joint_positions;
-	Eigen::VectorXd step_delta;
+	Eigen::VectorXd step_delta(7);
 	Eigen::VectorXd target_position;
 	Eigen::VectorXd predicted_times;
 	Eigen::VectorXd current_velocity;
-	Eigen::MatrixXd control_plane_mat;
+	Eigen::MatrixXd motion_vectors;
+	Eigen::VectorXd control_vec(4);
 	double sleep_time;
-	if (teleop_direction[0] == -9.0)
+	current_error = get_error();
+	if (controller_buttons[8])
 	{
 		std::cout << "User quit teleop: exiting" << std::endl;
 		return 0;
+	}
+	control_vec[0] = (controller_buttons[6] - controller_buttons[7]);
+	control_vec[1] = controller_axes[3];
+	control_vec[2] = -controller_axes[2];
+	if (controller_buttons[9])
+	{
+		cout << "Resetting to initial position" << endl;
+		goal_joint_angles << 0, 0, 0, 1.8, 0, 0, 0;
+		// command_count = 0;
+		// start = ros::WallTime::now();
+		return 2;
 	}
 	// grab and use current error, check for convergence
 	current_error = get_error();
@@ -262,44 +287,47 @@ int HILControl::teleop_move_step(bool continous_motion)
 		return 0;
 	}
 	step_delta = calculate_step(current_error);
-	control_plane_mat = control_plane_vectors(step_delta);
-	step_delta = control_plane_mat * teleop_direction;
+	motion_vectors = control_plane_vectors(step_delta);
+	// cout << "Motion vectors: " << motion_vectors << endl;
+	step_delta = motion_vectors.col(0) * control_vec[1] + motion_vectors.col(1) * control_vec[2] - step_delta * control_vec[0];
 	// grab and use current joint positions, check if valid
 	current_joint_positions = arm->get_positions();
-	target_position = calculate_target(current_joint_positions, step_delta);
-	if (!limit_check(target_position, total_joints))
+	// goal_joint_angles = calculate_target(current_joint_positions, step_delta);
+	goal_joint_angles = current_joint_positions + step_delta;
+	// cout << "Goal angles: " << goal_joint_angles << endl;
+	if (!limit_check(goal_joint_angles, total_joints))
 	{
 		return 1;
 	}
 	// calculate move run time
-	current_velocity = arm->get_velocities();
-	predicted_times = calculate_rampdown_and_endtime(step_delta, current_velocity);
+	// current_velocity = arm->get_velocities();
+	// predicted_times = calculate_rampdown_and_endtime(step_delta, current_velocity);
 	// write to screen for debugging
-	log(filename, "current_error: ", current_error, false);
-	log(filename, "previous_joint_positions: ", previous_joint_positions, false);
-	log(filename, "current_joint_positions: ", current_joint_positions, false);
-	log(filename, "previous_eef_position: ", previous_eef_position, false);
+	// log(filename, "current_error: ", current_error, false);
+	// log(filename, "previous_joint_positions: ", previous_joint_positions, false);
+	// log(filename, "current_joint_positions: ", current_joint_positions, false);
+	// log(filename, "previous_eef_position: ", previous_eef_position, false);
 	log(filename, "step delta: ", step_delta, false);
-	log(filename, "target position: ", target_position, false);
-	std::cout << "Predicted ramp-down time: " << predicted_times[1] << std::endl;
-	std::cout << "Predicted end time: " << predicted_times[2] << std::endl;
+	// log(filename, "target position: ", goal_joint_angles, false);
+	// std::cout << "Predicted ramp-down time: " << predicted_times[1] << std::endl;
+	// std::cout << "Predicted end time: " << predicted_times[2] << std::endl;
 	// save previous state before move
 	previous_joint_positions = current_joint_positions;
 	previous_eef_position = get_eef_position();
-	arm->call_move_joints(target_position, false);
+	// arm->call_move_joints(target_position, true);
 	// check for continuous motion and adjust sleep times accordingly
-	if (continous_motion)
-	{
-		// sleep_time = std::max(0.2, predicted_times[1] - 0.05);
-		// sleep_time = std::max(0.3, predicted_times[1] - 0.01);
-		sleep_time = std::min(1.0, std::max(0.3, (predicted_times[1] + predicted_times[2]) * 0.5)); // range between [0.3, 1.0]
-	}
-	else
-	{
-		sleep_time = 1.0;
-	}
-	std::cout << "// sleep time: " << sleep_time << std::endl;
-	ros::Duration(sleep_time).sleep();
+	// if (continous_motion)
+	// {
+	// 	// sleep_time = std::max(0.2, predicted_times[1] - 0.05);
+	// 	// sleep_time = std::max(0.3, predicted_times[1] - 0.01);
+	// 	sleep_time = std::min(1.0, std::max(0.3, (predicted_times[1] + predicted_times[2]) * 0.5)); // range between [0.3, 1.0]
+	// }
+	// else
+	// {
+	// sleep_time = 1.0;
+	// }
+	// std::cout << "// sleep time: " << sleep_time << std::endl;
+	// ros::Duration(sleep_time).sleep();
 	return 2;
 }
 
@@ -322,7 +350,7 @@ void HILControl::teleop_grasp()
 			switch (c)
 			{
 			case 0: // convergence - return early
-			teleop_move = false;
+				teleop_move = false;
 				return;
 			// case 1: // joints out of limit, reset jacobian
 			// 	jacobian = previous_jacobian;
@@ -531,22 +559,27 @@ void HILControl::teleop_converge(double alpha, int max_iterations, bool continou
 	std::cout << "\n**************************************" << std::endl;
 	while (true && i < max_iterations)
 	{
+		ros::Rate(30).sleep();
 		if (teleop_move)
 		{
 			std::cout << "received teleop command" << std::endl;
-			teleop_move = false;
 			std::cout << "Move: " << i++ << std::endl;
 			// ros::Time begin = ros::Time::now();
 			c = teleop_move_step(continous_motion);
 			switch (c)
 			{
 			case 0: // convergence - return early
+				teleop_move = false;
 				return;
 			case 1: // joints out of limit, reset jacobian
+				teleop_move = false;
 				jacobian = previous_jacobian;
 				log(filename, "target not within joint limits, resetting jacobian to: ", jacobian, false);
 				break;
 			case 2: // step completed successfully
+				arm->call_move_joints(goal_joint_angles, true);
+				ros::Duration(0.1).sleep();
+				teleop_move = false;
 				std::cout << "BROYDEN UPDATE:" << std::endl;
 				if (!broyden_update(alpha))
 				{ // condition number failed, reset to previous jacobian
@@ -621,44 +654,32 @@ bool HILControl::jacobian_estimate(double perturbation_delta)
 
 Eigen::MatrixXd HILControl::control_plane_vectors(Eigen::VectorXd &delta_q)
 {
-	/*
-		Returns a dof x 2 matrix, with columns that define the VS control plane.
-
-		Input:
-			delta_q:  next VS step in joint manifold tangent space (dof-vector)(assumed to be a small step, for local linearity purposes)
-
-			//TODO theta: desired rotation of the plane about the delta_q vector, with respect to the vertical axis in the robot base frame.
-
-		Output:
-			control_plane: a dof x 2 matrix with elements in the joint manifold tangent space. First column is "right" in plane. First is "forward" in plane.
-			The second column is the change in robot joint coordinates from the VS step. Using the tool jacobian to transform this to a direction in robot base
-			coordinates (and normalizing), this defines the cartesian 3-vector that we will define our plane around, e_2.
-			If we take the cross product of e2 with the vertical vector (0, 0, 1)^T, e1 x (0, 0, 1)^T and then rotate about e2 by an angle of (theta - pi/2),
-			we obtain e1.
-
-		cstephens 23/07/2018
-	*/
-	Eigen::MatrixXd control_vectors;
+	Eigen::MatrixXd control_vectors(total_joints, 3);
 	Eigen::MatrixXd jacobian(3, total_joints);
 	Eigen::MatrixXd jacobian_inv(total_joints, 3);
-	//TODO Eigen::MatrixXd rotation_mat;
 	Eigen::VectorXd d_q_1;
+	Eigen::Vector3d d_x;
 	Eigen::Vector3d d_x_1;
 	Eigen::Vector3d d_x_2;
-	Eigen::Vector2d e1(1.0, 0.0);
-	Eigen::Vector2d e2(0.0, 1.0);
+	Eigen::Vector3d d_x_0;
 	Eigen::Vector3d vertical(0, 0.0, 1.0);
-
+	Eigen::Vector3d tool_position;
+	Eigen::VectorXd current_positions;
+	current_positions = arm->get_positions();
 	jacobian = arm->get_lin_tool_jacobian();
 	pseudoInverse(jacobian, jacobian_inv);
-	delta_q *= 0.1; // set delta_q norm to be small, here 0.01
-	d_x_2 = jacobian * delta_q;
-	d_x_1 = d_x_2.cross(vertical);
-	d_x_1 *= d_x_2.norm() / d_x_1.norm();
-	pseudoInverse(jacobian, jacobian_inv);
-	d_q_1 = jacobian_inv * d_x_1;
-	control_vectors = d_q_1 * e1.transpose() + delta_q * e2.transpose();
-	return 5.0 * control_vectors;
+	tool_position = getToolPosition(current_positions, total_joints);
+	d_x = getToolPosition(current_positions + delta_q, total_joints) - tool_position;
+	d_x_2 = d_x;
+	d_x_1 = d_x.cross(vertical);
+	d_x_1 *= d_x.norm()/d_x_1.norm();
+	d_x_0 = d_x_1.cross(d_x_2);
+	d_x_0 *= d_x.norm()/d_x_0.norm();
+
+	control_vectors.col(0) = jacobian_inv * d_x_0;
+	control_vectors.col(1) = jacobian_inv * d_x_1;
+	control_vectors.col(2) = jacobian_inv * d_x_2;
+	return control_vectors;
 }
 
 Eigen::VectorXd HILControl::calculate_rampdown_and_endtime(const Eigen::VectorXd &delta, const Eigen::VectorXd &current_velocities)
